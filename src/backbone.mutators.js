@@ -61,9 +61,10 @@
 }(this, function(root, _, Backbone, exports, undef) {
     'use strict';
 
+
     // check if we use the amd branch of backbone and underscore
-    Backbone = Backbone === undef ? window.Backbone : Backbone;
-    _ = _ === undef ? window._ : _;
+    Backbone = Backbone === undef ? root.Backbone : Backbone;
+    _ = _ === undef ? root._ : _;
 
     // extend backbones model prototype with the mutator functionality
     var Mutator     = function () {},
