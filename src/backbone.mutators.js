@@ -1,4 +1,4 @@
-/*jslint nomen: true, indent: 4, es5: false, length: 120 */
+/*jslint nomen: true, unparam: true, indent: 4,  maxlen: 160, es5: false */
 
 // Backbone.Mutators v0.1.0
 //
