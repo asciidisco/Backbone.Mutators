@@ -42,25 +42,24 @@
 // user.get('fullname') // returns 'Sebastian Golasch'
 // user.toJSON() // return '{surename: 'Sebastian', lastname: 'Golasch', fullname: 'Sebastian Golasch'}'
 
-(function(root, factory) {
-  'use strict';
-
-  // Set up Backbone appropriately for the environment.
-  if (typeof exports !== 'undefined') {
-    // Node/CommonJS
-    factory(root, exports, require('underscore'));
-  } else if (typeof define === 'function' && define.amd) {
-    // AMD
-    define('mutators', ['underscore', 'backbone', 'exports'], function(root, _, Backbone, exports) {
-      return factory(root, exports, _, Backbone);
-    });
-  } else {
-    // Browser globals
-    root.Backbone = factory(root, {}, root._);
-  }
-}(this, function(root, _, Backbone, exports, undef) {
+(function (root, define, require, exports, module, factory, undef) {
     'use strict';
 
+    // Set up Backbone appropriately for the environment.
+    if (typeof exports !== 'undefined') {
+        // Node/CommonJS
+        factory(root, require('underscore'), require('backbone'), exports);
+    } else if (typeof define === 'function' && define.amd) {
+        // AMD
+        define('mutators', ['underscore', 'backbone', 'exports'], function (root, _, Backbone, exports) {
+            return factory(root, exports, _, Backbone);
+        });
+    } else {
+        // Browser globals
+        root.Backbone = factory(root, {}, root._);
+    }
+}(this, this.define, this.require, this.exports, this.module, function (root, _, Backbone, exports, undef) {
+    'use strict';
 
     // check if we use the amd branch of backbone and underscore
     Backbone = Backbone === undef ? root.Backbone : Backbone;
