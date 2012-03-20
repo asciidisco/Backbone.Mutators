@@ -42,7 +42,11 @@ $ npm install Backbone.Mutators
 ### CommonJS
 ```javascript
 // CommonJS
-var Backbone = require('path/to/backbone.mutators');
+ var _ = require('underscore');
+ var Backbone = require('backbone');
+ var Mutators = require('backbone.mutators');
+ 
+ _.extend(Backbone.Model.prototype, Backbone.Mutators.prototype);
 ```
 
 ### Vanilla JS
