@@ -62,22 +62,104 @@ _.extend(Backbone.Model.prototype, Mutators.prototype);
 ```
 
 ## Usage
+Some lines of code explain more then thousand words...
 
 ### Basic usage
 ```javascript
  var User = Backbone.Model.extend({
+ 	// Define mutator properties
     mutators: {
         fullname: function () {
             return this.firstname + ' ' + this.lastname;
         }
     },
     defaults: {
-    	firstname: 'Sebastian',
-        lastname: 'Golasch'
+    	firstname: 'Sugar',
+        lastname: 'Daddy'
     }
  });
 
  var user = new User();
- user.get('fullname') // returns 'Sebastian Golasch'
- user.toJSON() // return '{firstname: 'Sebastian', lastname: 'Golasch', fullname: 'Sebastian Golasch'}'
+ // use get to get the 'mutated' value 
+ user.get('fullname') // 'Sugar Daddy'
+ // serialize the model and see the 'mutated' value in the resulting JSON
+ user.toJSON() // '{firstname: 'Sugar', lastname: 'Daddy', fullname: 'Sugar Daddy'}'
+```
+
+### Override getters
+```javascript
+ var State = Backbone.Model.extend({
+ 	// Define mutator properties
+    mutators: {
+        status: function () {
+            return this.status === true ? 'Workish' : 'Bad bad error';
+        }
+    },
+    defaults: {
+    	status: true
+    }
+ });
+
+ var state = new State();
+ // use get to get the 'mutated' value 
+ state.get('status') // 'Sugar Daddy'
+ // serialize the model and see the 'mutated' value in the resulting JSON
+ state.toJSON() // '{status: 'Workish'}'
+```
+
+### Use setters
+```javascript
+ var User = Backbone.Model.extend({
+ 	// Define mutator properties
+    mutators: {
+        fullname: {
+			set: function (key, value, options) {
+				var names = value.split(' ');
+				this.set('firstname', names[0], options);
+				this.set('lastname', names[1],, options);
+			}
+        	get: function () {
+            	return this.firstname + ' ' + this.lastname;
+        	}
+        }
+    },
+    defaults: {
+    	firstname: 'Sugar',
+        lastname: 'Daddy'
+    }
+ });
+
+ var user = new User();
+ // use get to get the 'mutated' value 
+ user.set('fullname', 'Big Mama', {silent: true});
+ // serialize the model and see the 'mutated' value in the resulting JSON
+ user.get('fullname') // 'Big Mama'
+ user.get('firstname'); // 'Big'
+ user.get('lastname'); // 'Mama'
+```
+
+### Define multiple mutators
+```javascript
+ var User = Backbone.Model.extend({
+ 	// Define mutator properties
+    mutators: {
+        fullname: {
+			set: function (key, value, options) {
+				var names = value.split(' ');
+				this.set('firstname', names[0], options);
+				this.set('lastname', names[1],, options);
+			}
+        	get: function () {
+            	return this.firstname + ' ' + this.lastname;
+        	}
+        },
+        password: function () {
+    		return md5(this.password);
+    	}
+    },
+    defaults: {
+    	firstname: 'Sugar',
+        lastname: 'Daddy'
+    }
+ });
 ```
