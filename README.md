@@ -102,7 +102,7 @@ Some lines of code explain more then thousand words...
 
  var state = new State();
  // use get to get the 'mutated' value 
- state.get('status') // 'Sugar Daddy'
+ state.get('status') // 'Workish'
  // serialize the model and see the 'mutated' value in the resulting JSON
  state.toJSON() // '{status: 'Workish'}'
 ```
@@ -116,7 +116,7 @@ Some lines of code explain more then thousand words...
 			set: function (key, value, options) {
 				var names = value.split(' ');
 				this.set('firstname', names[0], options);
-				this.set('lastname', names[1],, options);
+				this.set('lastname', names[1], options);
 			}
         	get: function () {
             	return this.firstname + ' ' + this.lastname;
@@ -147,7 +147,7 @@ Some lines of code explain more then thousand words...
 			set: function (key, value, options) {
 				var names = value.split(' ');
 				this.set('firstname', names[0], options);
-				this.set('lastname', names[1],, options);
+				this.set('lastname', names[1], options);
 			}
         	get: function () {
             	return this.firstname + ' ' + this.lastname;
