@@ -22,10 +22,8 @@ task 'test', 'running tests with phantom', () ->
       console.log error
 
 task 'build:document', 'generates docs with docco', () ->
-  console.log 'Creating documentation'
   exec 'docco src/backbone.mutators.js', (error, stdout, stderr) -> 
-    console.log stdout
-    console.log stderr
+    console.log 'Creating documentation'
     if error != null
       console.log error
 
@@ -36,10 +34,12 @@ task 'build:concat', 'adds the license tag to the output file', () ->
   fs.writeFileSync 'backbone.mutators.js', license + '\n\n' + rpc, 'utf-8'
 
 task 'build:minify', 'minifies the plugin', () ->
-  console.log 'Minifiying the plugin'
-  exec 'uglifyjs -o backbone.mutators.min.js backbone.mutators.js', (error, stdout, stderr) -> 
-    console.log stdout
-    console.log stderr
+  exec 'uglifyjs -o backbone.mutators.min.js src/backbone.mutators.js', (error, stdout, stderr) -> 
+    console.log 'Minifiying the plugin'
+    rpc = fs.readFileSync 'backbone.mutators.min.js', 'utf-8'
+    license = fs.readFileSync 'license.txt', 'utf-8'
+    rpc = rpc.replace '/*jslint nomen: true, unparam: true, indent: 4, maxlen: 160, es5: false */', ''
+    fs.writeFileSync 'backbone.mutators.min.js', license + '\n\n' + rpc, 'utf-8'
     if error != null
       console.log error
 
