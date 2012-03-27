@@ -184,7 +184,7 @@ test("can set 'normal' value (object)", function () {
   	equal(model.get('overallStatus'), 1, 'Can get unmutated overallStatus');
 });
 
-test("can set 'mutated' value (object)", function () {
+test("can set newly created 'mutated' value (object)", function () {
 	expect(2);
 	var Model = Backbone.Model.extend({
 		mutators: {
@@ -202,6 +202,89 @@ test("can set 'mutated' value (object)", function () {
 
   	equal(model.get('pState'), 1, 'Can get mutated pState');
   	equal(model.get('aState'), 2, 'Can get mutated aState');  
+});
+
+test("can set 'mutated' value (object)", function () {
+	expect(4);
+	var Model = Backbone.Model.extend({
+		mutators: {
+			status: {
+				set: function (key, value, options, set) {
+					this.set('pState', value.pState, options);
+					this.set('aState', value.aState, options);
+					if (value.pState === 1) {
+						set(key, 'supercool', options);
+					}
+				}
+			}
+		},
+		defaults: {
+			status: 'awkward'
+		}
+	});
+
+	var model = new Model();
+
+  	equal(model.get('status'), 'awkward', 'Can get unmodified value');
+	model.set({status: {pState: 1, aState: 2, dState: 3}});
+  	equal(model.get('status'), 'supercool', 'Can get mutated status value');
+  	equal(model.get('pState'), 1, 'Can get mutated pState');
+  	equal(model.get('aState'), 2, 'Can get mutated aState');
+
+});
+
+test("can set 'mutated' value and fire event", function () {
+	expect(3);
+	var Model = Backbone.Model.extend({
+		mutators: {
+			status: {
+				set: function (key, value, options, set) {
+					set(key, value.toLowerCase(), options);
+				}
+			}
+		},
+		defaults: {
+			status: 'awkward'
+		}
+	});
+
+	var model = new Model();
+
+	model.bind('mutators:set:status', function () {
+		ok(true, 'Callback called');
+	});
+
+  	equal(model.get('status'), 'awkward', 'Can get unmodified value');
+	model.set({status: 'SUPERCOOL'});
+  	equal(model.get('status'), 'supercool', 'Can get mutated status value');
+
+});
+
+test("can set 'mutated' value and fire event", function () {
+	expect(2);
+	var Model = Backbone.Model.extend({
+		mutators: {
+			status: {
+				set: function (key, value, options, set) {
+					set(key, value.toLowerCase(), options);
+				}
+			}
+		},
+		defaults: {
+			status: 'awkward'
+		}
+	});
+
+	var model = new Model();
+
+	model.bind('mutators:set:status', function () {
+		ok(true, 'Callback called (And this shouldn´t happen)');
+	});
+
+  	equal(model.get('status'), 'awkward', 'Can get unmodified value');
+	model.set('status', 'SUPERCOOL', {silent: true});
+  	equal(model.get('status'), 'supercool', 'Can get mutated status value');
+
 });
 
 test("can serialize an unmutated model", function () {

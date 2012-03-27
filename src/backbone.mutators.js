@@ -118,7 +118,7 @@
 
             // check if we need to set a single value
             if (_.isFunction(this.mutators[key].set) === true) {
-                ret = _.bind(this.mutators[key].set, this)(key, attrs[key], options);
+                ret = _.bind(this.mutators[key].set, this)(key, attrs[key], options, _.bind(oldSet, this));
             }
         }
 
@@ -127,7 +127,10 @@
                 if (isMutator === true && _.isObject(this.mutators[attrKey]) === true) {
                     // check if we need to set a single value
                     if (_.isFunction(this.mutators[attrKey].set) === true) {
-                        ret = _.bind(this.mutators[attrKey].set, this)(attrKey, attr, options);
+                        if (options === undef || (_.isObject(options) === true && options.silent !== true)) {
+                            this.trigger('mutators:set:' + attrKey);
+                        }
+                        ret = _.bind(this.mutators[attrKey].set, this)(attrKey, attr, options, _.bind(oldSet, this));
                     }
                 }
             }, this));

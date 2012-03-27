@@ -18,7 +18,7 @@ The plugin itself implements the Universal Module Definition (UMD).
 You can use it with a CommonJS like loader, or with an AMD loader or via
 vanilla javascript.
 
-The plugin itself has two dependencies, underscore.js and backbone.js
+The plugin has two dependencies, underscore.js and backbone.js
 
 You can directly download the 
 [Development Version](https://raw.github.com/asciidisco/Backbone.Mutators/master/backbone.mutators.js)
@@ -113,7 +113,7 @@ Some lines of code explain more then thousand words...
  	// Define mutator properties
     mutators: {
         fullname: {
-			set: function (key, value, options) {
+			set: function (key, value, options, set) {
 				var names = value.split(' ');
 				this.set('firstname', names[0], options);
 				this.set('lastname', names[1], options);
@@ -144,7 +144,7 @@ Some lines of code explain more then thousand words...
  	// Define mutator properties
     mutators: {
         fullname: {
-			set: function (key, value, options) {
+			set: function (key, value, options, set) {
 				var names = value.split(' ');
 				this.set('firstname', names[0], options);
 				this.set('lastname', names[1], options);
@@ -163,3 +163,15 @@ Some lines of code explain more then thousand words...
     }
  });
 ```
+
+## Changelog
+
+### 0.2.0
++ Added the original Bakcbone.Model.set function as a fourth paramter for the mutated set
++ Added a 'mutators:set:{{YOUR_MUTATOR_PROPERTY}}' event when setting mutated properties
++ Added unit tests for the new features
++ Extended/fixed documentation
++ Added inline version tag [NOTE: Version 0.2.0 is fully backwards compatible]
+
+### 0.1.0
++ Initial Release
