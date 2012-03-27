@@ -1,6 +1,7 @@
 /*jslint nomen: true, unparam: true, indent: 4, maxlen: 160, es5: false */
 (function (root, define, require, exports, module, factory, undef) {
     'use strict';
+    
     if (typeof exports === 'object') {
         // Node. Does not work with strict CommonJS, but
         // only CommonJS-like enviroments that support module.exports,
