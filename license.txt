@@ -1,4 +1,4 @@
-// Backbone.Mutators v0.2.0
+// Backbone.Mutators v0.2.1
 // ------------------------
 // Documentation and Full License Available at:
 // http://github.com/asciidisco/Backbone.Mutators

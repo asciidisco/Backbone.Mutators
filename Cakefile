@@ -50,6 +50,3 @@ task 'build:lint', 'lints the plugins src file', () ->
     console.log 'err ' + stderr
     if error != null
       console.log 'error ' + error
-
-task 'pages:copyDocs', 'copies the current docs to the pages folder', () ->
-  console.log 'Copy docs'
