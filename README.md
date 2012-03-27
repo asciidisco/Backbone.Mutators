@@ -158,8 +158,8 @@ Some lines of code explain more then thousand words...
 
  var spicy = new Spicy();
  // use get to get the 'mutated' value 
- user.set('iAcceptOnlyLowercaseStuff', 'SALT');
- user.get('iAcceptOnlyLowercaseStuff') // 'salt'
+ spicy.set('iAcceptOnlyLowercaseStuff', 'SALT');
+ spicy.get('iAcceptOnlyLowercaseStuff') // 'salt'
 ```
 
 ### Define multiple mutators
