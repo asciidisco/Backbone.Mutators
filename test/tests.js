@@ -35,7 +35,6 @@ test("can get 'mutated' value (newly created)", function () {
 	var model = new Model();
 	model.set('firstname', 'Sebastian');
 	model.set('lastname', 'Golasch');
-
   	equal(model.get('firstname'), 'Sebastian', 'Can get unmutated firstname');
   	equal(model.get('lastname'), 'Golasch', 'Can get unmutated lastname');
   	equal(model.get('fullname'), 'Sebastian Golasch', 'Can get mutated fullname');  	
