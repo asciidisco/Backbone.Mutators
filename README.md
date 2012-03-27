@@ -167,7 +167,7 @@ Some lines of code explain more then thousand words...
 ## Changelog
 
 ### 0.2.0
-+ Added the original Bakcbone.Model.set function as a fourth paramter for the mutated set
++ Added the original Backbone.Model.set function as a fourth paramter for the mutated set
 + Added a 'mutators:set:{{YOUR_MUTATOR_PROPERTY}}' event when setting mutated properties
 + Added unit tests for the new features
 + Extended/fixed documentation
