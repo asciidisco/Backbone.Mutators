@@ -45,7 +45,8 @@ $ npm install Backbone.Mutators
 var _ = require('underscore');
 var Backbone = require('backbone');
 var Mutators = require('backbone.mutators');
- 
+
+// extend backbones model globally
 _.extend(Backbone.Model.prototype, Mutators.prototype);
 ```
 
@@ -117,7 +118,7 @@ Some lines of code explain more then thousand words...
 				var names = value.split(' ');
 				this.set('firstname', names[0], options);
 				this.set('lastname', names[1], options);
-			}
+			},
         	get: function () {
             	return this.firstname + ' ' + this.lastname;
         	}
@@ -136,6 +137,29 @@ Some lines of code explain more then thousand words...
  user.get('fullname') // 'Big Mama'
  user.get('firstname'); // 'Big'
  user.get('lastname'); // 'Mama'
+```
+
+### Use mutated setters and call the original setter within
+```javascript
+ var Spicy = Backbone.Model.extend({
+    // Define mutator properties
+    mutators: {
+        fullname: {
+            set: function (key, value, options, set) {
+                // call the original setter with the lowercased value
+                set(key, value.toLowerCase(), options);
+            }
+        }
+    },
+    defaults: {
+        iAcceptOnlyLowercaseStuff: 'sugar'
+    }
+ });
+
+ var spicy = new Spicy();
+ // use get to get the 'mutated' value 
+ user.set('iAcceptOnlyLowercaseStuff', 'SALT');
+ user.get('iAcceptOnlyLowercaseStuff') // 'salt'
 ```
 
 ### Define multiple mutators
