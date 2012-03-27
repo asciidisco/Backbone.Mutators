@@ -23,6 +23,7 @@
 // ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS 
 // IN THE SOFTWARE.
 
+
 /*jslint nomen: true, unparam: true, indent: 4, maxlen: 160, es5: false */
 (function (root, define, require, exports, module, factory, undef) {
     'use strict';
