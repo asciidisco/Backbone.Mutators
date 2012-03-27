@@ -164,6 +164,10 @@ Some lines of code explain more then thousand words...
  });
 ```
 
+## Further reading
+James Brown ([@ibjhb](https://github.com/ibjhb/Exploring-Backbone.Mutators))
+has written a blog article about Mutators ([Exploring Backbone.Mutators](http://ja.mesbrown.com/2012/03/exploring-backbone-mutators-plugin/))
+
 ## Changelog
 
 ### 0.2.0
