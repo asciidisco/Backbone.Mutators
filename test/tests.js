@@ -1,8 +1,4 @@
-module('Backbone.Mutators', {
-	setup: function () {
-		_.extend(Backbone.Model.prototype, Backbone.Mutators.prototype);
-	}
-});
+module('Backbone.Mutators');
 
 test("can get 'normal' value", function () {
 	expect(2);
@@ -282,6 +278,37 @@ test("can set 'mutated' value and fire event", function () {
 
   	equal(model.get('status'), 'awkward', 'Can get unmodified value');
 	model.set('status', 'SUPERCOOL', {silent: true});
+  	equal(model.get('status'), 'supercool', 'Can get mutated status value');
+
+});
+
+test("can set 'mutated' value and fire event", function () {
+	expect(3);
+	var Model = Backbone.Model.extend({
+		mutators: {
+			status: {
+				set: function (key, value, options, set) {
+					set(key, value.toLowerCase(), options);
+				}
+			}
+		},
+		defaults: {
+			status: 'awkward'
+		}
+	});
+
+	var model = new Model();
+
+	model.bind('mutators:set:status', function () {
+		ok(true, 'Callback called (And this shouldn´t happen)');
+	});
+
+	model.bind('change:status', function () {
+		ok(true, 'Callback called (And this should happen)');
+	});
+
+  	equal(model.get('status'), 'awkward', 'Can get unmodified value');
+	model.set('status', 'SUPERCOOL', {mutators: {silent: true}});
   	equal(model.get('status'), 'supercool', 'Can get mutated status value');
 
 });

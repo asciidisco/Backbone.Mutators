@@ -1,11 +1,11 @@
 {
    "name": "Backbone.Mutators",
-   "version": "0.1.0",
+   "version": "0.3.0",
    "description": "Backbone plugin to override getters and setters with logic",
    "homepage": "http://asciidisco.github.com/Backbone.Mutators/index.html",
    "keywords": ["backbone", "plugin", "mutator", "getter", "setter", "client", "browser"],
    "repository": {"type": "git", "url": "git://github.com/asciidisco/Backbone.Mutators.git"},  
-  "author"        : "Sebastian Golasch <public@asciidisco.com>",    
+   "author" : "Sebastian Golasch <public@asciidisco.com>",    
    "maintainers": [
         {
             "name": "Sebastian Golasch (asciidisco)",
@@ -18,13 +18,10 @@
    "lib": ".",
    "main": "backbone.mutators.js",
    "devDependencies": { 
-      "qunit": ">=0.2.x",
-      "nodelint": ">=0.x.x",
-      "docco": ">=0.x.x",
-      "coffee-script": ">=0.x.x"
+      "grunt": "~0.3.x"
    },
   "dependencies"  : {
     "underscore"  : ">=1.3.1",
-     "backbone": ">=0.9.x"   
+    "backbone": ">=0.9.x"   
   }
 }

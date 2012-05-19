@@ -1,32 +1,32 @@
-// Backbone.Mutators v0.2.0
-// ------------------------
-// Documentation and Full License Available at:
-// http://github.com/asciidisco/Backbone.Mutators
-//
-// Copyright (c) 2012 @asciidisco <public@asciidisco.com>
-//
-// Permission is hereby granted, free of charge, to any person obtaining a 
-// copy of this software and associated documentation files (the "Software"), 
-// to deal in the Software without restriction, including without limitation 
-// the rights to use, copy, modify, merge, publish, distribute, sublicense, 
-// and/or sell copies of the Software, and to permit persons to whom the 
-// Software is furnished to do so, subject to the following conditions:
-//
-// The above copyright notice and this permission notice shall be included in 
-// all copies or substantial portions of the Software.
-//
-// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, 
-// EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, 
-// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. 
-// IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, 
-// DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, 
-// ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS 
-// IN THE SOFTWARE.
+/*! Backbone.Mutators - v0.3.0
+------------------------------
+Build @ 2012-05-19
+Documentation and Full License Available at:
+http://asciidisco.github.com/Backbone.Mutators/index.html
+git://github.com/asciidisco/Backbone.Mutators.git
+Copyright (c) 2012 Sebastian Golasch <public@asciidisco.com>
 
+Permission is hereby granted, free of charge, to any person obtaining a
+copy of this software and associated documentation files (the "Software"),
+to deal in the Software without restriction, including without limitation
+the rights to use, copy, modify, merge, publish, distribute, sublicense,
+and/or sell copies of the Software, and to permit persons to whom the
 
-/*jslint nomen: true, unparam: true, indent: 4, maxlen: 160, es5: false */
+Software is furnished to do so, subject to the following conditions:
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
+IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
+DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE,
+ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS
+IN THE SOFTWARE.*/
+
 (function (root, define, require, exports, module, factory, undef) {
     'use strict';
+    
     if (typeof exports === 'object') {
         // Node. Does not work with strict CommonJS, but
         // only CommonJS-like enviroments that support module.exports,
@@ -53,25 +53,17 @@
 // <script src="underscore.js"></script>
 // <script src="backbone.js"></script>
 // <script src="backbone.mutators.js"></script>
-// <script>
-//     _.extend(Backbone.Model.prototype, Backbone.Mutators.prototype);
-// </script>
 //
 // Node:
 // var _ = require('underscore');
 // var Backbone = require('backbone');
 // var Mutators = require('backbone.mutators');
-// 
-// _.extend(Backbone.Model.prototype, Backbone.Mutators.prototype);
+//
 //
 // AMD:
 // define(['underscore', 'backbone', 'backbone.mutators'], function (_, Backbone, Mutators) {
-//     _.extend(Backbone.Model.prototype, Mutators.prototype);
 //    // insert sample from below
 //    return User;
-//
-// HINT: If you use some plugin like Backbone.Relational you need to do smth. like this:
-// _.extend(Backbone.RelationalModel.prototype, Mutators.prototype);
 // });
 //
 // var User = Backbone.Model.extend({
@@ -153,7 +145,7 @@
                 if (isMutator === true && _.isObject(this.mutators[attrKey]) === true) {
                     // check if we need to set a single value
                     if (_.isFunction(this.mutators[attrKey].set) === true) {
-                        if (options === undef || (_.isObject(options) === true && options.silent !== true)) {
+                        if (options === undef || (_.isObject(options) === true && options.silent !== true && (options.mutators !== undef && options.mutators.silent !== true))) {
                             this.trigger('mutators:set:' + attrKey);
                         }
                         ret = _.bind(this.mutators[attrKey].set, this)(attrKey, attr, options, _.bind(oldSet, this));
@@ -186,6 +178,10 @@
         return attr;
     };
 
+    // extend the models prototype
+    _.extend(Backbone.Model.prototype, Mutator.prototype);
+
+    // make mutators globally available under the Backbone namespace
     Backbone.Mutators = Mutator;
     return Mutator;
 }));
