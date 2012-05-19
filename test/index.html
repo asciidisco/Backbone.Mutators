@@ -11,13 +11,29 @@
     <div id="qunit-testrunner-toolbar"></div>
     <h2 id="qunit-userAgent"></h2>
     <ol id="qunit-tests"></ol>
-    <script>
-      console.log('Called');
-    </script>
     <script src="../vendor/qunit/qunit/qunit.js"></script>
+    <script>
+      console.log('Called after qunit');
+      console.log(window.test);
+    </script>
     <script src="../vendor/underscore/underscore.js"></script>
+    <script>
+      console.log('Called after underscore');
+      console.log(window._);      
+    </script>    
     <script src="../vendor/backbone/backbone.js"></script>
-    <script src="../src/backbone.mutators.js"></script>    
+    <script>
+      console.log('Called after backbone');
+      console.log(window.Backbone);      
+    </script>     
+    <script src="../src/backbone.mutators.js"></script>
+    <script>
+      console.log('Called after backbone.mutators');
+      console.log(window.Backbone.Mutators);      
+    </script>      
     <script src="tests.js"></script>
+    <script>
+      console.log('Called after tests');     
+    </script>       
   </body>
 </html>
