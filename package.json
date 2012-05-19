@@ -16,9 +16,6 @@
    "licenses": [{ "type": "MIT", "url": "http://mit-license.org/" }],
    "repositories": [{ "type": "git", "url": "https://github.com/asciidisco/Backbone.Mutators" }],
    "lib": ".",
-   "scripts": {
-     "test": "grunt qunit" 
-   },
    "main": "backbone.mutators.js",
    "devDependencies": { 
       "grunt": "~0.3.x"
