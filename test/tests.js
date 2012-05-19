@@ -1,6 +1,7 @@
 module('Backbone.Mutators');
 
 test("can get 'normal' value", function () {
+	console.log('Running test');
 	expect(2);
 	var Model = Backbone.Model.extend({
 		mutators: {
