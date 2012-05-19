@@ -1,7 +1,7 @@
 module('Backbone.Mutators');
 
 test("can get 'normal' value", function () {
-	console.log('Running test');
+	console.log('Running test 1');
 	expect(2);
 	var Model = Backbone.Model.extend({
 		mutators: {
@@ -20,6 +20,7 @@ test("can get 'normal' value", function () {
 });
 
 test("can get 'mutated' value (newly created)", function () {
+		console.log('Running test 2');
 	expect(3);
 	var Model = Backbone.Model.extend({
 		mutators: {
@@ -38,6 +39,7 @@ test("can get 'mutated' value (newly created)", function () {
 });
 
 test("can get 'mutated' value (overridden)", function () {
+		console.log('Running test 3');
 	expect(5);
 	var Model = Backbone.Model.extend({
 		mutators: {
@@ -60,6 +62,7 @@ test("can get 'mutated' value (overridden)", function () {
 });
 
 test("can get 'normal' value - object context", function () {
+		console.log('Running test 4');
 	expect(2);
 	var Model = Backbone.Model.extend({
 		mutators: {
@@ -80,6 +83,7 @@ test("can get 'normal' value - object context", function () {
 });
 
 test("can get 'mutated' value (newly created) - object context", function () {
+		console.log('Running test 5');
 	expect(3);
 	var Model = Backbone.Model.extend({
 		mutators: {
@@ -101,6 +105,7 @@ test("can get 'mutated' value (newly created) - object context", function () {
 });
 
 test("can get 'mutated' value (overridden) - object context", function () {
+		console.log('Running test 6');
 	expect(5);
 	var Model = Backbone.Model.extend({
 		mutators: {
@@ -125,6 +130,7 @@ test("can get 'mutated' value (overridden) - object context", function () {
 });
 
 test("can set 'normal' value (key <-> value)", function () {
+		console.log('Running test 7');
 	expect(1);
 	var Model = Backbone.Model.extend({
 		mutators: {
@@ -143,6 +149,7 @@ test("can set 'normal' value (key <-> value)", function () {
 });
 
 test("can set 'mutated' value (key <-> value)", function () {
+		console.log('Running test 8');
 	expect(2);
 	var Model = Backbone.Model.extend({
 		mutators: {
@@ -163,6 +170,7 @@ test("can set 'mutated' value (key <-> value)", function () {
 });
 
 test("can set 'normal' value (object)", function () {
+		console.log('Running test 9');
 	expect(1);
 	var Model = Backbone.Model.extend({
 		mutators: {
@@ -181,6 +189,7 @@ test("can set 'normal' value (object)", function () {
 });
 
 test("can set newly created 'mutated' value (object)", function () {
+		console.log('Running test 10');
 	expect(2);
 	var Model = Backbone.Model.extend({
 		mutators: {
@@ -201,6 +210,7 @@ test("can set newly created 'mutated' value (object)", function () {
 });
 
 test("can set 'mutated' value (object)", function () {
+		console.log('Running test 11');
 	expect(4);
 	var Model = Backbone.Model.extend({
 		mutators: {
@@ -230,6 +240,7 @@ test("can set 'mutated' value (object)", function () {
 });
 
 test("can set 'mutated' value and fire event", function () {
+		console.log('Running test 12');
 	expect(3);
 	var Model = Backbone.Model.extend({
 		mutators: {
@@ -257,6 +268,7 @@ test("can set 'mutated' value and fire event", function () {
 });
 
 test("can set 'mutated' value and fire event", function () {
+		console.log('Running test 13');
 	expect(2);
 	var Model = Backbone.Model.extend({
 		mutators: {
@@ -284,6 +296,7 @@ test("can set 'mutated' value and fire event", function () {
 });
 
 test("can set 'mutated' value and fire event", function () {
+		console.log('Running test 14');
 	expect(3);
 	var Model = Backbone.Model.extend({
 		mutators: {
@@ -315,6 +328,7 @@ test("can set 'mutated' value and fire event", function () {
 });
 
 test("can serialize an unmutated model", function () {
+		console.log('Running test 15');
 	expect(2);
 	var Model = Backbone.Model.extend({
 		defaults: {
@@ -328,6 +342,7 @@ test("can serialize an unmutated model", function () {
 });
 
 test("can serialize an unmutated model", function () {
+		console.log('Running test 16');
 	expect(3);
 	var Model = Backbone.Model.extend({
 		defaults: {
