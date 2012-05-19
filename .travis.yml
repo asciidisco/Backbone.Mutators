@@ -4,4 +4,4 @@ node_js:
 before_script:
   - "git submodule update --init"
   - "export DISPLAY=:99.0"
-  - "grunt qunit --verbose"
+  - "grunt travis --verbose"
