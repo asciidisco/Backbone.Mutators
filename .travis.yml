@@ -3,6 +3,5 @@ node_js:
   - 0.6
  before_script:
   - "git submodule update --init"
-  - "export phantomjs='phantomjs --local-to-remote-url-access=yes --ignore-ssl-errors=yes'"
   - "export DISPLAY=:99.0"
   - "grunt qunit"
