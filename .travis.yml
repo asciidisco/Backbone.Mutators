@@ -3,6 +3,4 @@ node_js:
   - 0.6
 before_script:
   - "git submodule update --init"
-  - "phantomjs --version"
   - "export DISPLAY=:99.0"
-  - "sh -e /etc/init.d/xvfb start"
