@@ -3,4 +3,4 @@ node_js:
   - 0.6
 before_script:
   - "git submodule update --init"
-  - "grunt lint"
+  - "grunt qunit"
