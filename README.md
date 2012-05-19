@@ -265,12 +265,6 @@ Some lines of code explain more then thousand words...
  spicy.get('iAcceptOnlyLowercaseStuff') // 'salt'
 ```
 
- var spicy = new Spicy();
- // use get to get the 'mutated' value 
- spicy.set('iAcceptOnlyLowercaseStuff', 'SALT');
- spicy.get('iAcceptOnlyLowercaseStuff') // 'salt'
-```
-
 ### Define multiple mutators
 ```javascript
  var User = Backbone.Model.extend({
