@@ -17,8 +17,8 @@
    "repositories": [{ "type": "git", "url": "https://github.com/asciidisco/Backbone.Mutators" }],
    "lib": ".",
    "scripts": { 
-    "test": "grunt qunit" 
-    },
+     "test": "grunt qunit" 
+   },
    "main": "backbone.mutators.js",
    "devDependencies": { 
       "grunt": "~0.3.x"
