@@ -22,8 +22,8 @@ test("can get 'mutated' value (newly created)", function () {
 	expect(3);
 	var Model = Backbone.Model.extend({
 		mutators: {
-			fullname: function (attributes) {
-				return this.firstname + ' ' + this.lastname;
+			fullname: function () {
+				return this.get('firstname') + ' ' + this.get('lastname');
 			}
 		}
 	});
@@ -40,8 +40,12 @@ test("can get 'mutated' value (overridden)", function () {
 	expect(5);
 	var Model = Backbone.Model.extend({
 		mutators: {
-			status: function (attributes) {
-				return { status: this.status, overallStatus: this.overallStatus, underestimatedNonOverallStatus: this.underestimatedNonOverallStatus };
+			status: function (key, value, options, set) {
+				if(key){
+					set('status', value);
+				}
+
+				return { status: this.attributes.status, overallStatus: this.get('overallStatus'), underestimatedNonOverallStatus: this.get('underestimatedNonOverallStatus') };
 			}
 		}
 	});
@@ -64,7 +68,7 @@ test("can get 'normal' value - object context", function () {
 		mutators: {
 			fullanme: {
 				get: function (attributes) {
-					return this.firstname + ' ' + this.lastname;
+					return this.get('firstname') + ' ' + this.get('lastname');
 				}
 			}
 		}
@@ -84,7 +88,7 @@ test("can get 'mutated' value (newly created) - object context", function () {
 		mutators: {
 			fullname: {
 				get: function (attributes) {
-					return this.firstname + ' ' + this.lastname;
+					return this.get('firstname') + ' ' + this.get('lastname');
 				}
 			}
 		}
@@ -105,7 +109,7 @@ test("can get 'mutated' value (overridden) - object context", function () {
 		mutators: {
 			status: {
 				get: function (attributes) {
-					return { status: this.status, overallStatus: this.overallStatus, underestimatedNonOverallStatus: this.underestimatedNonOverallStatus };
+					return { status: this.attributes.status, overallStatus: this.get('overallStatus'), underestimatedNonOverallStatus: this.get('underestimatedNonOverallStatus') };
 				}
 			}
 		}
@@ -129,7 +133,7 @@ test("can set 'normal' value (key <-> value)", function () {
 		mutators: {
 			status: {
 				set: function (attributes) {
-					return { status: this.status, overallStatus: this.overallStatus, underestimatedNonOverallStatus: this.underestimatedNonOverallStatus };
+					return { status: this.attributes.status, overallStatus: this.get('overallStatus'), underestimatedNonOverallStatus: this.get('underestimatedNonOverallStatus') };
 				}
 			}
 		}
@@ -167,7 +171,7 @@ test("can set 'normal' value (object)", function () {
 		mutators: {
 			status: {
 				set: function (attributes) {
-					return { status: this.status, overallStatus: this.overallStatus, underestimatedNonOverallStatus: this.underestimatedNonOverallStatus };
+					return { status: this.attributes.status, overallStatus: this.get('overallStatus'), underestimatedNonOverallStatus: this.get('underestimatedNonOverallStatus') };
 				}
 			}
 		}
@@ -343,4 +347,29 @@ test("can serialize an unmutated model", function () {
 	equal((new Model()).toJSON().a, 'a', 'can serialize mutated model');
 	equal((new Model()).toJSON().b, 'b', 'can serialize mutated model');	
 	equal((new Model()).toJSON().state, 'a, b', 'can serialize mutated model');		
+});
+
+test("can get/set using single method", 2, function(){
+
+	var Model = Backbone.Model.extend({
+		mutators:{
+			state:function(key, value, options, set){
+				if(key){
+					this.set("a", value);
+
+					equal(arguments.length, 4);
+				}
+
+				return this.get("a");
+			}
+		}
+	});
+
+	var model = new Model();
+
+	var value = "happy";
+	model.set('state', value);
+
+	equal(model.get('state'), value);
+
 });

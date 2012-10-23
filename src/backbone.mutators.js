@@ -76,12 +76,12 @@
 
         // check if we have a getter mutation
         if (isMutator === true && _.isFunction(this.mutators[attr]) === true) {
-            return _.bind(this.mutators[attr], this.attributes)();
+            return this.mutators[attr].call(this);
         }
 
         // check if we have a deeper nested getter mutation
         if (isMutator === true && _.isObject(this.mutators[attr]) === true && _.isFunction(this.mutators[attr].get) === true) {
-            return _.bind(this.mutators[attr].get, this.attributes)();
+            return this.mutators[attr].get.call(this);
         }
 
         return oldGet.call(this, attr);
@@ -110,7 +110,9 @@
 
             // check if we need to set a single value
             if (_.isFunction(this.mutators[key].set) === true) {
-                ret = _.bind(this.mutators[key].set, this)(key, attrs[key], options, _.bind(oldSet, this));
+                ret = this.mutators[key].set.call(this, key, attrs[key], options, _.bind(oldSet, this));
+            } else if(_.isFunction(this.mutators[key])){
+                ret = this.mutators[key].call(this, key, attrs[key], options, _.bind(oldSet, this));
             }
         }
 
@@ -118,11 +120,17 @@
             _.each(attrs, _.bind(function (attr, attrKey) {
                 if (isMutator === true && _.isObject(this.mutators[attrKey]) === true) {
                     // check if we need to set a single value
+                    //TODO: refactor this mess
                     if (_.isFunction(this.mutators[attrKey].set) === true) {
                         if (options === undef || (_.isObject(options) === true && options.silent !== true && (options.mutators !== undef && options.mutators.silent !== true))) {
                             this.trigger('mutators:set:' + attrKey);
                         }
-                        ret = _.bind(this.mutators[attrKey].set, this)(attrKey, attr, options, _.bind(oldSet, this));
+                        ret = this.mutators[attrKey].set.call(this, attrKey, attr, options, _.bind(oldSet, this));
+                    } else if(_.isFunction(this.mutators[attrKey])){
+                        if (options === undef || (_.isObject(options) === true && options.silent !== true && (options.mutators !== undef && options.mutators.silent !== true))) {
+                            this.trigger('mutators:set:' + attrKey);
+                        }
+                        ret = this.mutators[attrKey].call(this, attrKey, attr, options, _.bind(oldSet, this));
                     }
                 }
             }, this));
