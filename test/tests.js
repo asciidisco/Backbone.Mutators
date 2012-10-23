@@ -209,10 +209,14 @@ test("can set 'mutated' value (object)", function () {
 		mutators: {
 			status: {
 				set: function (key, value, options, set) {
-					this.set('pState', value.pState, options);
-					this.set('aState', value.aState, options);
-					if (value.pState === 1) {
-						set(key, 'supercool', options);
+					if(_.isString(value)){
+						set(key, value);
+					} else {
+						this.set('pState', value.pState, options);
+						this.set('aState', value.aState, options);
+						if (value.pState === 1) {
+							set(key, 'supercool', options);
+						}
 					}
 				}
 			}
@@ -349,7 +353,7 @@ test("can serialize an unmutated model", function () {
 	equal((new Model()).toJSON().state, 'a, b', 'can serialize mutated model');		
 });
 
-test("can get/set using single method", 2, function(){
+test("can get/set using single method", 6, function(){
 
 	var Model = Backbone.Model.extend({
 		mutators:{
@@ -358,6 +362,7 @@ test("can get/set using single method", 2, function(){
 					this.set("a", value);
 
 					equal(arguments.length, 4);
+					return null; //prevents ret from returning
 				}
 
 				return this.get("a");
@@ -371,5 +376,18 @@ test("can get/set using single method", 2, function(){
 	model.set('state', value);
 
 	equal(model.get('state'), value);
+
+	var new_state = "excited",
+	new_level = 10;
+
+
+	//set multiple
+	model.set({
+		level:new_level,
+		state:new_state
+	});
+
+	equal(model.get('state'), new_state);
+	equal(model.get('level'), new_level);
 
 });

@@ -116,26 +116,28 @@
             }
         }
 
-        if (value === undef && options === undef) {
+        if (_.isObject(attrs)) {
             _.each(attrs, _.bind(function (attr, attrKey) {
                 if (isMutator === true && _.isObject(this.mutators[attrKey]) === true) {
                     // check if we need to set a single value
-                    //TODO: refactor this mess
-                    if (_.isFunction(this.mutators[attrKey].set) === true) {
-                        if (options === undef || (_.isObject(options) === true && options.silent !== true && (options.mutators !== undef && options.mutators.silent !== true))) {
-                            this.trigger('mutators:set:' + attrKey);
-                        }
-                        ret = this.mutators[attrKey].set.call(this, attrKey, attr, options, _.bind(oldSet, this));
-                    } else if(_.isFunction(this.mutators[attrKey])){
-                        if (options === undef || (_.isObject(options) === true && options.silent !== true && (options.mutators !== undef && options.mutators.silent !== true))) {
-                            this.trigger('mutators:set:' + attrKey);
-                        }
-                        ret = this.mutators[attrKey].call(this, attrKey, attr, options, _.bind(oldSet, this));
+
+                    var meth = this.mutators[attrKey];
+                    if(_.isFunction(meth.set)){
+                        meth = meth.set;
                     }
+
+                    if(_.isFunction(meth)){
+                        if (options === undef || (_.isObject(options) === true && options.silent !== true && (options.mutators !== undef && options.mutators.silent !== true))) {
+                            this.trigger('mutators:set:' + attrKey);
+                        }
+                        ret = meth.call(this, attrKey, attr, options, _.bind(oldSet, this));
+                    }
+                    
                 }
             }, this));
         }
-
+        
+        //validation purposes
         if (ret !== null) {
             return ret;
         }
