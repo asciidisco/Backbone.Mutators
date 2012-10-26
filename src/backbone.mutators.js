@@ -121,6 +121,7 @@
 
         if (_.isObject(attrs)) {
             _.each(attrs, _.bind(function (attr, attrKey) {
+                var cur_ret = null;
                 if (isMutator === true && _.isObject(this.mutators[attrKey]) === true) {
                     // check if we need to set a single value
 
@@ -133,10 +134,16 @@
                         if (options === undef || (_.isObject(options) === true && options.silent !== true && (options.mutators !== undef && options.mutators.silent !== true))) {
                             this.trigger('mutators:set:' + attrKey);
                         }
-                        ret = meth.call(this, attrKey, attr, options, _.bind(oldSet, this));
+                        cur_ret = meth.call(this, attrKey, attr, options, _.bind(oldSet, this));
                     }
                     
                 }
+                if (cur_ret === null) {
+                    cur_ret = _.bind(oldSet, this)(attrKey, attr, options);
+                }
+
+                if (ret !== false) ret = cur_ret;
+
             }, this));
         }
         
