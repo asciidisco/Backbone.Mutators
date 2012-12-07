@@ -70,6 +70,9 @@
         oldSet      = Backbone.Model.prototype.set,
         oldToJson   = Backbone.Model.prototype.toJSON;
 
+    // This is necessary to ensure that Models declared without the mutators object do not throw and error
+    Mutator.prototype.mutators = {};
+
     // override get functionality to fetch the mutator props
     Mutator.prototype.get = function (attr) {
         var isMutator = this.mutators !== undef;
