@@ -166,6 +166,9 @@ IN THE SOFTWARE.*/
         // fetch ye olde values
         var attr = oldToJson.call(this);
         // iterate over all mutators (if there are some)
+        if ( !this.mutators ) {
+            this.mutators = {};
+        }
         _.each(this.mutators, _.bind(function (mutator, name) {
             // check if we have some getter mutations (nested or )
             if (_.isObject(this.mutators[name]) === true && _.isFunction(this.mutators[name].get)) {
