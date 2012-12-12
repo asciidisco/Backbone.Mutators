@@ -1,29 +1,3 @@
-/*! Backbone.Mutators - v0.3.0
-------------------------------
-Build @ 2012-05-19
-Documentation and Full License Available at:
-http://asciidisco.github.com/Backbone.Mutators/index.html
-git://github.com/asciidisco/Backbone.Mutators.git
-Copyright (c) 2012 Sebastian Golasch <public@asciidisco.com>
-
-Permission is hereby granted, free of charge, to any person obtaining a
-copy of this software and associated documentation files (the "Software"),
-to deal in the Software without restriction, including without limitation
-the rights to use, copy, modify, merge, publish, distribute, sublicense,
-and/or sell copies of the Software, and to permit persons to whom the
-
-Software is furnished to do so, subject to the following conditions:
-The above copyright notice and this permission notice shall be included in
-all copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
-EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
-IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
-DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE,
-ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS
-IN THE SOFTWARE.*/
-
 (function (root, define, require, exports, module, factory, undef) {
     'use strict';
     
@@ -102,12 +76,12 @@ IN THE SOFTWARE.*/
 
         // check if we have a getter mutation
         if (isMutator === true && _.isFunction(this.mutators[attr]) === true) {
-            return _.bind(this.mutators[attr], this.attributes)();
+            return this.mutators[attr].call(this);
         }
 
         // check if we have a deeper nested getter mutation
         if (isMutator === true && _.isObject(this.mutators[attr]) === true && _.isFunction(this.mutators[attr].get) === true) {
-            return _.bind(this.mutators[attr].get, this.attributes)();
+            return this.mutators[attr].get.call(this);
         }
 
         return oldGet.call(this, attr);
@@ -136,24 +110,32 @@ IN THE SOFTWARE.*/
 
             // check if we need to set a single value
             if (_.isFunction(this.mutators[key].set) === true) {
-                ret = _.bind(this.mutators[key].set, this)(key, attrs[key], options, _.bind(oldSet, this));
+                ret = this.mutators[key].set.call(this, key, attrs[key], options, _.bind(oldSet, this));
+            } else if(_.isFunction(this.mutators[key])){
+                ret = this.mutators[key].call(this, key, attrs[key], options, _.bind(oldSet, this));
             }
         }
 
-        if (value === undef && options === undef) {
+        if (_.isObject(attrs)) {
             _.each(attrs, _.bind(function (attr, attrKey) {
                 if (isMutator === true && _.isObject(this.mutators[attrKey]) === true) {
                     // check if we need to set a single value
-                    if (_.isFunction(this.mutators[attrKey].set) === true) {
-                        if (options === undef || (_.isObject(options) === true && options.silent !== true && (options.mutators !== undef && options.mutators.silent !== true))) {
-                            this.trigger('mutators:set:' + attrKey);
-                        }
-                        ret = _.bind(this.mutators[attrKey].set, this)(attrKey, attr, options, _.bind(oldSet, this));
+
+                    var meth = this.mutators[attrKey];
+                    if(_.isFunction(meth.set)){
+                        meth = meth.set;
                     }
+
+                    if (options === undef || (_.isObject(options) === true && options.silent !== true && (options.mutators !== undef && options.mutators.silent !== true))) {
+                        this.trigger('mutators:set:' + attrKey);
+                    }
+                    ret = meth.call(this, attrKey, attr, options, _.bind(oldSet, this));
+                    
                 }
             }, this));
         }
 
+        //validation purposes
         if (ret !== null) {
             return ret;
         }

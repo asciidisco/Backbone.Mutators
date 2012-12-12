@@ -79,12 +79,12 @@
 
         // check if we have a getter mutation
         if (isMutator === true && _.isFunction(this.mutators[attr]) === true) {
-            return _.bind(this.mutators[attr], this.attributes)();
+            return this.mutators[attr].call(this);
         }
 
         // check if we have a deeper nested getter mutation
         if (isMutator === true && _.isObject(this.mutators[attr]) === true && _.isFunction(this.mutators[attr].get) === true) {
-            return _.bind(this.mutators[attr].get, this.attributes)();
+            return this.mutators[attr].get.call(this);
         }
 
         return oldGet.call(this, attr);
@@ -113,24 +113,34 @@
 
             // check if we need to set a single value
             if (_.isFunction(this.mutators[key].set) === true) {
-                ret = _.bind(this.mutators[key].set, this)(key, attrs[key], options, _.bind(oldSet, this));
+                ret = this.mutators[key].set.call(this, key, attrs[key], options, _.bind(oldSet, this));
+            } else if(_.isFunction(this.mutators[key])){
+                ret = this.mutators[key].call(this, key, attrs[key], options, _.bind(oldSet, this));
             }
         }
 
-        if (value === undef && options === undef) {
+        if (_.isObject(attrs)) {
             _.each(attrs, _.bind(function (attr, attrKey) {
                 if (isMutator === true && _.isObject(this.mutators[attrKey]) === true) {
                     // check if we need to set a single value
-                    if (_.isFunction(this.mutators[attrKey].set) === true) {
+
+                    var meth = this.mutators[attrKey];
+                    if(_.isFunction(meth.set)){
+                        meth = meth.set;
+                    }
+
+                    if(_.isFunction(meth)){
                         if (options === undef || (_.isObject(options) === true && options.silent !== true && (options.mutators !== undef && options.mutators.silent !== true))) {
                             this.trigger('mutators:set:' + attrKey);
                         }
-                        ret = _.bind(this.mutators[attrKey].set, this)(attrKey, attr, options, _.bind(oldSet, this));
+                        ret = meth.call(this, attrKey, attr, options, _.bind(oldSet, this));
                     }
+                    
                 }
             }, this));
         }
-
+        
+        //validation purposes
         if (ret !== null) {
             return ret;
         }

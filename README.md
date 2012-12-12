@@ -75,7 +75,7 @@ Some lines of code explain more then thousand words...
  	// Define mutator properties
     mutators: {
         fullname: function () {
-            return this.firstname + ' ' + this.lastname;
+            return this.get('firstname') + ' ' + this.get('lastname');
         }
     },
     defaults: {
@@ -97,7 +97,7 @@ Some lines of code explain more then thousand words...
  	// Define mutator properties
     mutators: {
         status: function () {
-            return this.status === true ? 'Workish' : 'Bad bad error';
+            return this.get('status') === true ? 'Workish' : 'Bad bad error';
         }
     },
     defaults: {
@@ -124,7 +124,7 @@ Some lines of code explain more then thousand words...
 				this.set('lastname', names[1], options);
 			},
         	get: function () {
-            	return this.firstname + ' ' + this.lastname;
+            	return this.get('firstname') + ' ' + this.get('lastname');
         	}
         }
     },
@@ -155,7 +155,7 @@ Some lines of code explain more then thousand words...
                 this.set('lastname', names[1], options);
             },
             get: function () {
-                return this.firstname + ' ' + this.lastname;
+                return this.get('firstname') + ' ' + this.get('lastname');
             }
         }
     },
@@ -203,7 +203,7 @@ Some lines of code explain more then thousand words...
                 this.set('lastname', names[1], options);
             },
             get: function () {
-                return this.firstname + ' ' + this.lastname;
+                return this.get('firstname') + ' ' + this.get('lastname');
             }
         }
     },
@@ -265,6 +265,28 @@ Some lines of code explain more then thousand words...
  spicy.get('iAcceptOnlyLowercaseStuff') // 'salt'
 ```
 
+### Define one getter / setter method
+```javascript
+ var User = Backbone.Model.extend({
+    // Define mutator properties
+    mutators: {
+        fullname: function (key, value, options, set) {
+            if(key){
+                var names = value.split(' ');
+                this.set('firstname', names[0], options);
+                this.set('lastname', names[1], options);
+            }
+                
+            return this.get('firstname') + ' ' + this.get('lastname');
+        }
+    },
+    defaults: {
+        firstname: 'Sugar',
+        lastname: 'Daddy'
+    }
+ });
+```
+
 ### Define multiple mutators
 ```javascript
  var User = Backbone.Model.extend({
@@ -277,7 +299,7 @@ Some lines of code explain more then thousand words...
 				this.set('lastname', names[1], options);
 			}
         	get: function () {
-            	return this.firstname + ' ' + this.lastname;
+                return this.get('firstname') + ' ' + this.get('lastname');
         	}
         },
         password: function () {
@@ -296,6 +318,10 @@ James Brown ([@ibjhb](https://github.com/ibjhb/Exploring-Backbone.Mutators))
 has written a blog article about Mutators ([Exploring Backbone.Mutators](http://ja.mesbrown.com/2012/03/exploring-backbone-mutators-plugin/))
 
 ## Changelog
+
+### 0.3.1
++ Change get context to modal instead of attributes
++ Added single getter / setter method
 
 ### 0.3.0
 + Removed the Cake based build process and moved to grunt
