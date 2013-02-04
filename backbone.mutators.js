@@ -57,7 +57,7 @@
 // user.get('fullname') // returns 'Sebastian Golasch'
 // user.toJSON() // return '{firstname: 'Sebastian', lastname: 'Golasch', fullname: 'Sebastian Golasch'}'
 
-}(this, this.define, this.require, this.exports, this.module, function (_, Backbone, root, undef) {
+}(this, this.define, this.require || require, this.exports || exports, this.module || module, function (_, Backbone, root, undef) {
     'use strict';
 
     // check if we use the amd branch of backbone and underscore
