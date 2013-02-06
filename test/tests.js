@@ -334,7 +334,7 @@ test("can serialize an unmutated model", function () {
 	equal((new Model()).toJSON().b, 'b', 'can serialize unmutated model');	
 });
 
-test("can serialize an unmutated model", function () {
+test("can serialize mutated model", function () {
 	expect(3);
 	var Model = Backbone.Model.extend({
 		defaults: {
@@ -343,13 +343,13 @@ test("can serialize an unmutated model", function () {
 		},
 		mutators: {
 			state: function () {
-				return this.a + ', ' + this.b;
+				return this.get('a') + ', ' + this.get('b');
 			}
 		}
 	});
 
 	equal((new Model()).toJSON().a, 'a', 'can serialize mutated model');
-	equal((new Model()).toJSON().b, 'b', 'can serialize mutated model');	
+	equal((new Model()).get('state'), 'a, b', 'can serialize mutated model');
 	equal((new Model()).toJSON().state, 'a, b', 'can serialize mutated model');		
 });
 
