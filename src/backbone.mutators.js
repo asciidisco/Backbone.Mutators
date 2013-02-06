@@ -156,9 +156,9 @@
         _.each(this.mutators, _.bind(function (mutator, name) {
             // check if we have some getter mutations (nested or )
             if (_.isObject(this.mutators[name]) === true && _.isFunction(this.mutators[name].get)) {
-                attr[name] = _.bind(this.mutators[name].get, this.attributes)();
+                attr[name] = _.bind(this.mutators[name].get, this)();
             } else {
-                attr[name] = _.bind(this.mutators[name], this.attributes)();
+                attr[name] = _.bind(this.mutators[name], this)();
             }
         }, this));
 
