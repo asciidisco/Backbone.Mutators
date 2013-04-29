@@ -142,7 +142,7 @@
                     cur_ret = _.bind(oldSet, this)(attrKey, attr, options);
                 }
 
-                if (ret !== false) ret = cur_ret;
+                if (ret !== false) { ret = cur_ret; }
 
             }, this));
         }
