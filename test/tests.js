@@ -183,6 +183,28 @@ test("can set 'normal' value (object)", function () {
   	equal(model.get('overallStatus'), 1, 'Can get unmutated overallStatus');
 });
 
+test("can set attribute objects", function () {
+	expect(3);
+	var Model = Backbone.Model.extend({
+		mutators: {
+			fullname: {
+				set: function (key, value, options, set) {
+					var names = value.split(' ');
+					this.set('firstname', names[0], options);
+					this.set('lastname', names[1], options);
+				}
+			}
+		}
+	});
+
+	var model = new Model();
+	model.set({ fullname: 'Sebastian Golasch', admin: true });
+
+	equal(model.get('firstname'), 'Sebastian', 'Can get the firstname');
+	equal(model.get('lastname'), 'Golasch', 'Can get the lastname');
+	equal(model.get('admin'), true, 'Can get the admin status');
+});
+
 test("can set newly created 'mutated' value (object)", function () {
 	expect(2);
 	var Model = Backbone.Model.extend({
