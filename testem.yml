@@ -1,0 +1,2 @@
+framework: qunit
+test_page: test/index.html
