@@ -1,29 +1,38 @@
 {
-   "name": "Backbone.Mutators",
-   "version": "0.3.1",
-   "description": "Backbone plugin to override getters and setters with logic",
-   "homepage": "http://asciidisco.github.com/Backbone.Mutators/index.html",
-   "keywords": ["backbone", "plugin", "mutator", "getter", "setter", "client", "browser"],
-   "repository": {"type": "git", "url": "git://github.com/asciidisco/Backbone.Mutators.git"},
+  "name": "Backbone.Mutators",
+  "version": "0.3.1",
+  "description": "Backbone plugin to override getters and setters with logic",
+  "homepage": "http://asciidisco.github.com/Backbone.Mutators/index.html",
+  "keywords": ["backbone", "plugin", "mutator", "getter", "setter", "client", "browser"],
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/asciidisco/Backbone.Mutators.git"
+  },
    "author" : "Sebastian Golasch <public@asciidisco.com>",
    "maintainers": [
-        {
-            "name": "Sebastian Golasch (asciidisco)",
-            "email": "public@asciidisco.com",
-            "web": "http://asciidisco.com"
-        }
+      {
+        "name": "Sebastian Golasch (asciidisco)",
+        "email": "public@asciidisco.com",
+        "web": "http://asciidisco.com"
+      }
    ],
-   "licenses": [{ "type": "MIT", "url": "http://mit-license.org/" }],
-   "repositories": [{ "type": "git", "url": "https://github.com/asciidisco/Backbone.Mutators" }],
-   "lib": ".",
-   "main": "backbone.mutators.js",
-   "devDependencies": {
-      "grunt": "~0.4.x",
-      "grunt-contrib-qunit": "~0.2.x",
-      "grunt-contrib-jshint": "~0.2.x",
-      "grunt-contrib-uglify": "~0.2.x",
-      "grunt-contrib-concat": "~0.3.x"
-   },
+  "licenses": [
+    {
+      "type": "MIT",
+      "url": "http://mit-license.org/"
+    }
+  ],
+  "repositories": [{ "type": "git", "url": "https://github.com/asciidisco/Backbone.Mutators" }],
+  "lib": ".",
+  "main": "backbone.mutators.js",
+  "devDependencies": {
+    "grunt": "~0.4.x",
+    "grunt-qunit-istanbul": "~0.1.x",
+    "grunt-contrib-jshint": "~0.2.x",
+    "grunt-contrib-uglify": "~0.2.x",
+    "grunt-contrib-concat": "~0.3.x",
+    "grunt-contrib-nodeunit": "~0.1.x"
+  },
   "dependencies"  : {
     "underscore"  : ">=1.3.1",
     "backbone": ">=0.9.x"

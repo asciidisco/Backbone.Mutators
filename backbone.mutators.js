@@ -1,6 +1,31 @@
+/*! Backbone.Mutators - v0.3.1
+------------------------------
+Build @ 2013-04-30
+Documentation and Full License Available at:
+http://asciidisco.github.com/Backbone.Mutators/index.html
+git://github.com/asciidisco/Backbone.Mutators.git
+Copyright (c) 2013 Sebastian Golasch <public@asciidisco.com>
+
+Permission is hereby granted, free of charge, to any person obtaining a
+copy of this software and associated documentation files (the "Software"),
+to deal in the Software without restriction, including without limitation
+the rights to use, copy, modify, merge, publish, distribute, sublicense,
+and/or sell copies of the Software, and to permit persons to whom the
+
+Software is furnished to do so, subject to the following conditions:
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
+IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
+DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE,
+ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS
+IN THE SOFTWARE.*/
 (function (root, define, require, exports, module, factory, undef) {
     'use strict';
-    
+
     if (typeof exports === 'object') {
         // Node. Does not work with strict CommonJS, but
         // only CommonJS-like enviroments that support module.exports,
@@ -57,7 +82,7 @@
 // user.get('fullname') // returns 'Sebastian Golasch'
 // user.toJSON() // return '{firstname: 'Sebastian', lastname: 'Golasch', fullname: 'Sebastian Golasch'}'
 
-}(this, this.define, this.require || require, this.exports || exports, this.module || module, function (_, Backbone, root, undef) {
+}(this, this.define, this.require, this.exports, this.module, function (_, Backbone, root, undef) {
     'use strict';
 
     // check if we use the amd branch of backbone and underscore
@@ -69,6 +94,9 @@
         oldGet      = Backbone.Model.prototype.get,
         oldSet      = Backbone.Model.prototype.set,
         oldToJson   = Backbone.Model.prototype.toJSON;
+
+    // This is necessary to ensure that Models declared without the mutators object do not throw and error
+    Mutator.prototype.mutators = {};
 
     // override get functionality to fetch the mutator props
     Mutator.prototype.get = function (attr) {
@@ -95,8 +123,8 @@
             attr        = null;
 
         // seamleassly stolen from backbone core
-        // check if the setter action is triggered 
-        // using key <-> value or object 
+        // check if the setter action is triggered
+        // using key <-> value or object
         if (_.isObject(key) || key === null) {
             attrs = key;
             options = value;
@@ -118,6 +146,7 @@
 
         if (_.isObject(attrs)) {
             _.each(attrs, _.bind(function (attr, attrKey) {
+                var cur_ret = null;
                 if (isMutator === true && _.isObject(this.mutators[attrKey]) === true) {
                     // check if we need to set a single value
 
@@ -126,12 +155,20 @@
                         meth = meth.set;
                     }
 
-                    if (options === undef || (_.isObject(options) === true && options.silent !== true && (options.mutators !== undef && options.mutators.silent !== true))) {
-                        this.trigger('mutators:set:' + attrKey);
+                    if(_.isFunction(meth)){
+                        if (options === undef || (_.isObject(options) === true && options.silent !== true && (options.mutators !== undef && options.mutators.silent !== true))) {
+                            this.trigger('mutators:set:' + attrKey);
+                        }
+                        cur_ret = meth.call(this, attrKey, attr, options, _.bind(oldSet, this));
                     }
-                    ret = meth.call(this, attrKey, attr, options, _.bind(oldSet, this));
-                    
+
                 }
+                if (cur_ret === null) {
+                    cur_ret = _.bind(oldSet, this)(attrKey, attr, options);
+                }
+
+                if (ret !== false) { ret = cur_ret; }
+
             }, this));
         }
 
@@ -148,19 +185,22 @@
         // fetch ye olde values
         var attr = oldToJson.call(this);
         // iterate over all mutators (if there are some)
-        if ( !this.mutators ) {
-            this.mutators = {};
-        }
         _.each(this.mutators, _.bind(function (mutator, name) {
             // check if we have some getter mutations (nested or )
             if (_.isObject(this.mutators[name]) === true && _.isFunction(this.mutators[name].get)) {
-                attr[name] = _.bind(this.mutators[name].get, this.attributes)();
+                attr[name] = _.bind(this.mutators[name].get, this)();
             } else {
-                attr[name] = _.bind(this.mutators[name], this.attributes)();
+                attr[name] = _.bind(this.mutators[name], this)();
             }
         }, this));
 
         return attr;
+    };
+
+    // override get functionality to get HTML-escaped the mutator props
+    Mutator.prototype.escape = function (attr){
+        var val = this.get(attr);
+        return _.escape(val == null ? '' : '' + val);
     };
 
     // extend the models prototype

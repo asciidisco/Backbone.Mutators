@@ -33,7 +33,7 @@ test("can get 'mutated' value (newly created)", function () {
 	model.set('lastname', 'Golasch');
   	equal(model.get('firstname'), 'Sebastian', 'Can get unmutated firstname');
   	equal(model.get('lastname'), 'Golasch', 'Can get unmutated lastname');
-  	equal(model.get('fullname'), 'Sebastian Golasch', 'Can get mutated fullname');  	
+  	equal(model.get('fullname'), 'Sebastian Golasch', 'Can get mutated fullname');
 });
 
 test("can get 'mutated' value (overridden)", function () {
@@ -55,11 +55,11 @@ test("can get 'mutated' value (overridden)", function () {
 	model.set('underestimatedNonOverallStatus', 3);
 	model.set('status', 2);
 
-  	equal(model.get('overallStatus'), 1, 'Can get unmutated overallStatus'); 	
-  	equal(model.get('underestimatedNonOverallStatus'), 3, 'Can get unmutated underestimatedNonOverallStatus'); 	
+  	equal(model.get('overallStatus'), 1, 'Can get unmutated overallStatus');
+  	equal(model.get('underestimatedNonOverallStatus'), 3, 'Can get unmutated underestimatedNonOverallStatus');
   	equal(model.get('status').status, 2, 'Can get mutated status');
-  	equal(model.get('status').overallStatus, 1, 'Can get mutated status'); 
-  	equal(model.get('status').underestimatedNonOverallStatus, 3, 'Can get mutated status');   	  		
+  	equal(model.get('status').overallStatus, 1, 'Can get mutated status');
+  	equal(model.get('status').underestimatedNonOverallStatus, 3, 'Can get mutated status');
 });
 
 test("can get 'normal' value - object context", function () {
@@ -100,7 +100,7 @@ test("can get 'mutated' value (newly created) - object context", function () {
 
   	equal(model.get('firstname'), 'Sebastian', 'Can get unmutated firstname');
   	equal(model.get('lastname'), 'Golasch', 'Can get unmutated lastname');
-  	equal(model.get('fullname'), 'Sebastian Golasch', 'Can get mutated fullname');  	
+  	equal(model.get('fullname'), 'Sebastian Golasch', 'Can get mutated fullname');
 });
 
 test("can get 'mutated' value (overridden) - object context", function () {
@@ -120,11 +120,11 @@ test("can get 'mutated' value (overridden) - object context", function () {
 	model.set('underestimatedNonOverallStatus', 3);
 	model.set('status', 2);
 
-  	equal(model.get('overallStatus'), 1, 'Can get unmutated overallStatus'); 	
-  	equal(model.get('underestimatedNonOverallStatus'), 3, 'Can get unmutated underestimatedNonOverallStatus'); 	
+  	equal(model.get('overallStatus'), 1, 'Can get unmutated overallStatus');
+  	equal(model.get('underestimatedNonOverallStatus'), 3, 'Can get unmutated underestimatedNonOverallStatus');
   	equal(model.get('status').status, 2, 'Can get mutated status');
-  	equal(model.get('status').overallStatus, 1, 'Can get mutated status'); 
-  	equal(model.get('status').underestimatedNonOverallStatus, 3, 'Can get mutated status');   	  		
+  	equal(model.get('status').overallStatus, 1, 'Can get mutated status');
+  	equal(model.get('status').underestimatedNonOverallStatus, 3, 'Can get mutated status');
 });
 
 test("can set 'normal' value (key <-> value)", function () {
@@ -162,7 +162,7 @@ test("can set 'mutated' value (key <-> value)", function () {
 	model.set('status', {pState: 1, aState: 2});
 
   	equal(model.get('pState'), 1, 'Can get mutated pState');
-  	equal(model.get('aState'), 2, 'Can get mutated aState');  	
+  	equal(model.get('aState'), 2, 'Can get mutated aState');
 });
 
 test("can set 'normal' value (object)", function () {
@@ -222,7 +222,7 @@ test("can set newly created 'mutated' value (object)", function () {
 	model.set({status: {pState: 1, aState: 2, dState: 3}});
 
   	equal(model.get('pState'), 1, 'Can get mutated pState');
-  	equal(model.get('aState'), 2, 'Can get mutated aState');  
+  	equal(model.get('aState'), 2, 'Can get mutated aState');
 });
 
 test("can set 'mutated' value (object)", function () {
@@ -349,11 +349,11 @@ test("can serialize an unmutated model", function () {
 		defaults: {
 			a: 'a',
 			b: 'b'
-		} 
+		}
 	});
 
 	equal((new Model()).toJSON().a, 'a', 'can serialize unmutated model');
-	equal((new Model()).toJSON().b, 'b', 'can serialize unmutated model');	
+	equal((new Model()).toJSON().b, 'b', 'can serialize unmutated model');
 });
 
 test("can serialize mutated model", function () {
@@ -372,7 +372,27 @@ test("can serialize mutated model", function () {
 
 	equal((new Model()).toJSON().a, 'a', 'can serialize mutated model');
 	equal((new Model()).get('state'), 'a, b', 'can serialize mutated model');
-	equal((new Model()).toJSON().state, 'a, b', 'can serialize mutated model');		
+	equal((new Model()).toJSON().state, 'a, b', 'can serialize mutated model');
+});
+
+test("can escape mutated properties", function () {
+	expect(2);
+	var Model = Backbone.Model.extend({
+		defaults: {
+			a: 'a',
+			b: 'b'
+		},
+		mutators: {
+			b: function () {
+				return 'c';
+			}
+		}
+	});
+
+	var model = new Model();
+	equal(model.get('b'), 'c');
+	model.set('b', 'foobar');
+	equal(model.get('b'), 'c');
 });
 
 test("can get/set using single method", 6, function(){

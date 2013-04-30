@@ -1,6 +1,6 @@
 (function (root, define, require, exports, module, factory, undef) {
     'use strict';
-    
+
     if (typeof exports === 'object') {
         // Node. Does not work with strict CommonJS, but
         // only CommonJS-like enviroments that support module.exports,
@@ -98,8 +98,8 @@
             attr        = null;
 
         // seamleassly stolen from backbone core
-        // check if the setter action is triggered 
-        // using key <-> value or object 
+        // check if the setter action is triggered
+        // using key <-> value or object
         if (_.isObject(key) || key === null) {
             attrs = key;
             options = value;
@@ -136,7 +136,7 @@
                         }
                         cur_ret = meth.call(this, attrKey, attr, options, _.bind(oldSet, this));
                     }
-                    
+
                 }
                 if (cur_ret === null) {
                     cur_ret = _.bind(oldSet, this)(attrKey, attr, options);
@@ -146,7 +146,7 @@
 
             }, this));
         }
-        
+
         //validation purposes
         if (ret !== null) {
             return ret;
@@ -170,6 +170,12 @@
         }, this));
 
         return attr;
+    };
+
+    // override get functionality to get HTML-escaped the mutator props
+    Mutator.prototype.escape = function (attr){
+        var val = this.get(attr);
+        return _.escape(val == null ? '' : '' + val);
     };
 
     // extend the models prototype
