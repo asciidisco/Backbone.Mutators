@@ -89,7 +89,8 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-qunit-istanbul');
   grunt.loadNpmTasks('grunt-contrib-uglify');
   grunt.loadNpmTasks('grunt-contrib-nodeunit');
-  grunt.loadNpmTasks('grunt-contrib-yuidocs');
+  grunt.loadNpmTasks('grunt-contrib-yuidoc');
+  grunt.loadNpmTasks('grunt-complexity');
   grunt.loadNpmTasks('grunt-docco');
   grunt.loadNpmTasks('grunt-plato');
 
