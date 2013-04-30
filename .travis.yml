@@ -2,6 +2,4 @@ language: node_js
 node_js:
   - 0.8
 before_script:
-  - "git submodule update --init"
-  - "export DISPLAY=:99.0"
   - "grunt travis --verbose"

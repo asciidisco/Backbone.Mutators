@@ -23,14 +23,14 @@ IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
 DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE,
 ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS
 IN THE SOFTWARE.*/
-(function (root, define, require, exports, module, factory, undef) {
+(function (root, factory, undef) {
     'use strict';
 
     if (typeof exports === 'object') {
         // Node. Does not work with strict CommonJS, but
         // only CommonJS-like enviroments that support module.exports,
         // like Node.
-        module.exports = factory(require('underscore'), require('backbone'));
+        module.exports = factory(require('underscore'), require('Backbone'));
     } else if (typeof define === 'function' && define.amd) {
         // AMD. Register as an anonymous module.
         define(['underscore', 'backbone'], function (_, Backbone) {
@@ -82,7 +82,7 @@ IN THE SOFTWARE.*/
 // user.get('fullname') // returns 'Sebastian Golasch'
 // user.toJSON() // return '{firstname: 'Sebastian', lastname: 'Golasch', fullname: 'Sebastian Golasch'}'
 
-}(this, this.define, this.require, this.exports, this.module, function (_, Backbone, root, undef) {
+}(this, function (_, Backbone, root, undef) {
     'use strict';
 
     // check if we use the amd branch of backbone and underscore
@@ -117,10 +117,9 @@ IN THE SOFTWARE.*/
 
     // override set functionality to set the mutator props
     Mutator.prototype.set = function (key, value, options) {
-        var isMutator   = this.mutators !== undef,
-            ret         = null,
-            attrs       = null,
-            attr        = null;
+        var isMutator = this.mutators !== undef,
+            ret = null,
+            attrs = null;
 
         // seamleassly stolen from backbone core
         // check if the setter action is triggered
@@ -186,7 +185,7 @@ IN THE SOFTWARE.*/
         var attr = oldToJson.call(this);
         // iterate over all mutators (if there are some)
         _.each(this.mutators, _.bind(function (mutator, name) {
-            // check if we have some getter mutations (nested or )
+            // check if we have some getter mutations
             if (_.isObject(this.mutators[name]) === true && _.isFunction(this.mutators[name].get)) {
                 attr[name] = _.bind(this.mutators[name].get, this)();
             } else {
