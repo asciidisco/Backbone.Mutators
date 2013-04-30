@@ -21,7 +21,7 @@ vanilla javascript.
 The plugin has two dependencies, underscore.js and backbone.js
 
 ### Dowload
-You can directly download the 
+You can directly download the
 [Development Version](https://raw.github.com/asciidisco/Backbone.Mutators/master/backbone.mutators.js)
 or the
 [Production Version](https://raw.github.com/asciidisco/Backbone.Mutators/master/backbone.mutators.min.js)
@@ -85,7 +85,7 @@ Some lines of code explain more then thousand words...
  });
 
  var user = new User();
- // use get to get the 'mutated' value 
+ // use get to get the 'mutated' value
  user.get('fullname') // 'Sugar Daddy'
  // serialize the model and see the 'mutated' value in the resulting JSON
  user.toJSON() // '{firstname: 'Sugar', lastname: 'Daddy', fullname: 'Sugar Daddy'}'
@@ -106,7 +106,7 @@ Some lines of code explain more then thousand words...
  });
 
  var state = new State();
- // use get to get the 'mutated' value 
+ // use get to get the 'mutated' value
  state.get('status') // 'Workish'
  // serialize the model and see the 'mutated' value in the resulting JSON
  state.toJSON() // '{status: 'Workish'}'
@@ -135,7 +135,7 @@ Some lines of code explain more then thousand words...
  });
 
  var user = new User();
- // use get to get the 'mutated' value 
+ // use get to get the 'mutated' value
  user.set('fullname', 'Big Mama', {silent: true});
  // serialize the model and see the 'mutated' value in the resulting JSON
  user.get('fullname') // 'Big Mama'
@@ -182,9 +182,9 @@ Some lines of code explain more then thousand words...
     console.log('Somebody changed the last name');
  });
 
- // use get to get the 'mutated' value 
+ // use get to get the 'mutated' value
  user.set('fullname', 'Big Mama');
- 
+
  // serialize the model and see the 'mutated' value in the resulting JSON
  user.get('fullname') // 'Big Mama'
  user.get('firstname'); // 'Big'
@@ -233,9 +233,9 @@ Some lines of code explain more then thousand words...
     console.log('Somebody changed the last name');
  });
 
- // use get to get the 'mutated' value 
+ // use get to get the 'mutated' value
  user.set('fullname', 'Big Mama', {mutators: {silence: true}});
- 
+
  // serialize the model and see the 'mutated' value in the resulting JSON
  user.get('fullname') // 'Big Mama'
  user.get('firstname'); // 'Big'
@@ -247,7 +247,7 @@ Some lines of code explain more then thousand words...
  var Spicy = Backbone.Model.extend({
     // Define mutator properties
     mutators: {
-        fullname: {
+        iAcceptOnlyLowercaseStuff: {
             set: function (key, value, options, set) {
                 // call the original setter with the lowercased value
                 set(key, value.toLowerCase(), options);
@@ -260,7 +260,7 @@ Some lines of code explain more then thousand words...
  });
 
  var spicy = new Spicy();
- // use get to get the 'mutated' value 
+ // use get to get the 'mutated' value
  spicy.set('iAcceptOnlyLowercaseStuff', 'SALT');
  spicy.get('iAcceptOnlyLowercaseStuff') // 'salt'
 ```
@@ -276,7 +276,7 @@ Some lines of code explain more then thousand words...
                 this.set('firstname', names[0], options);
                 this.set('lastname', names[1], options);
             }
-                
+
             return this.get('firstname') + ' ' + this.get('lastname');
         }
     },
