@@ -29,12 +29,38 @@ module.exports = function(grunt) {
     all: {
         options: {
           username: 'asciidisco',
-          key: 'adaf8bb4-7712-440d-8ccb-0af3c9f68689', // if not provided it'll default to ENV SAUCE_ACCESS_KEY (if applicable)
           urls: ['http://rawgithub.com/asciidisco/Backbone.Mutators/master/test/index_sauce.html'],
-          tunnelTimeout: 50000,
-          testTimeout: 50000,
+          tunnelTimeout: 100000,
+          testTimeout: 100000,
+          testname: 'Backbone.Mutators',
+          tags: ['backbone', 'plugin', 'mutators', 'unittest'],
+          build: process.env.TRAVIS_JOB_ID,
           browsers: [{
-            browserName: 'opera'
+            browserName: 'firefox',
+            version: '19',
+            platform: 'XP'
+          }, {
+            browserName: 'chrome',
+            platform: 'XP'
+          }, {
+            browserName: 'chrome',
+            platform: 'linux'
+          }, {
+            browserName: 'internet explorer',
+            platform: 'WIN8',
+            version: '10'
+          }, {
+            browserName: 'internet explorer',
+            platform: 'VISTA',
+            version: '9'
+          }, {
+            browserName: 'internet explorer',
+            platform: 'XP',
+            version: '8'
+          }, {
+            browserName: 'opera',
+            platform: 'Windows 2008',
+            version: '12'
           }]
         }
       }
