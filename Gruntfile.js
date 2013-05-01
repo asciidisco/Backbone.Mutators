@@ -52,6 +52,10 @@ module.exports = function(grunt) {
             platform: 'Windows 7',
             version: '9'
           }, {
+            browserName: 'firefox',
+            platform: 'Windows 7',
+            version: '21'
+          }, {
             browserName: 'opera',
             platform: 'Windows 2008',
             version: '12'
