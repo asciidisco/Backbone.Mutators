@@ -22,7 +22,7 @@ module.exports = function(grunt) {
           htmlReport: 'report/coverage'
         }
       },
-      all: ['test/**/*.html']
+      all: ['test/index.html']
     },
 
   'saucelabs-qunit': {
