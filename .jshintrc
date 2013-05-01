@@ -29,6 +29,7 @@
     "Backbone": true,
     "exports": true,
     "require": true,
-    "define": true
+    "define": true,
+    "process": true
   }
 }
