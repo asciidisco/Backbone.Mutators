@@ -42,7 +42,7 @@ module.exports = function(grunt) {
           }, {
             browserName: 'safari',
             version: '6',
-            platform: 'osx'
+            platform: 'OS X 10.8'
           }, {
             browserName: 'chrome',
             version: '25',
