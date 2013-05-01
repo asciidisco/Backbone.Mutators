@@ -36,29 +36,6 @@ module.exports = function(grunt) {
           tags: ['backbone', 'plugin', 'mutators', 'unittest'],
           build: process.env.TRAVIS_JOB_ID,
           browsers: [{
-            browserName: 'FIREFOX',
-            version: '21',
-            platform: 'Windows XP'
-          }, {
-            browserName: 'safari',
-            version: '6',
-            platform: 'OS X 10.8'
-          }, {
-            browserName: 'chrome',
-            version: '25'
-          }, {
-            browserName: 'internet explorer',
-            platform: 'WIN8',
-            version: '10'
-          }, {
-            browserName: 'internet explorer',
-            platform: 'VISTA',
-            version: '9'
-          }, {
-            browserName: 'internet explorer',
-            platform: 'XP',
-            version: '8'
-          }, {
             browserName: 'internet explorer',
             platform: 'XP',
             version: '7'
