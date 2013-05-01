@@ -35,14 +35,22 @@ module.exports = function(grunt) {
           testname: 'Backbone.Mutators',
           tags: ['backbone', 'plugin', 'mutators', 'unittest'],
           build: process.env.TRAVIS_JOB_ID,
-          browsers: [{
+          browsers: [ {
+            browserName: 'internet explorer',
+            platform: 'XP',
+            version: '6'
+          }, {
             browserName: 'internet explorer',
             platform: 'XP',
             version: '7'
           }, {
             browserName: 'internet explorer',
-            platform: 'XP',
-            version: '6'
+            platform: 'Windows 7',
+            version: '8'
+          }, {
+            browserName: 'internet explorer',
+            platform: 'Windows 7',
+            version: '9'
           }, {
             browserName: 'opera',
             platform: 'Windows 2008',
