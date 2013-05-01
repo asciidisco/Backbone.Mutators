@@ -40,12 +40,12 @@ module.exports = function(grunt) {
             version: '19',
             platform: 'XP'
           }, {
-            browserName: 'chrome',
-            version: '26',
+            browserName: 'safari',
+            version: '6',
             platform: 'osx'
           }, {
             browserName: 'chrome',
-            version: '26',
+            version: '25',
             platform: 'linux'
           }, {
             browserName: 'internet explorer',
