@@ -112,6 +112,6 @@ module.exports = function(grunt) {
 
   // Default task.
   grunt.registerTask('default', ['jshint', 'qunit', 'nodeunit', 'concat', 'uglify']);
-  grunt.registerTask('travis', ['lint', 'qunit', 'saucelabs-qunit']);
+  grunt.registerTask('travis', ['jshint', 'qunit', 'saucelabs-qunit']);
 
 };
