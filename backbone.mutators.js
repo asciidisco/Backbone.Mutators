@@ -1,6 +1,6 @@
-/*! Backbone.Mutators - v0.3.1
+/*! Backbone.Mutators - v0.4.0
 ------------------------------
-Build @ 2013-04-30
+Build @ 2013-05-01
 Documentation and Full License Available at:
 http://asciidisco.github.com/Backbone.Mutators/index.html
 git://github.com/asciidisco/Backbone.Mutators.git
