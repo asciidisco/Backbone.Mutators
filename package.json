@@ -3,26 +3,39 @@
   "version": "0.4.0",
   "description": "Backbone plugin to override getters and setters with logic",
   "homepage": "http://asciidisco.github.com/Backbone.Mutators/index.html",
-  "keywords": ["backbone", "plugin", "mutator", "getter", "setter", "client", "browser"],
+  "keywords": [
+    "backbone",
+    "plugin",
+    "mutator",
+    "getter",
+    "setter",
+    "client",
+    "browser"
+  ],
   "repository": {
     "type": "git",
     "url": "git://github.com/asciidisco/Backbone.Mutators.git"
   },
-   "author" : "Sebastian Golasch <public@asciidisco.com>",
-   "maintainers": [
-      {
-        "name": "Sebastian Golasch (asciidisco)",
-        "email": "public@asciidisco.com",
-        "web": "http://asciidisco.com"
-      }
-   ],
+  "author": "Sebastian Golasch <public@asciidisco.com>",
+  "maintainers": [
+    {
+      "name": "Sebastian Golasch (asciidisco)",
+      "email": "public@asciidisco.com",
+      "web": "http://asciidisco.com"
+    }
+  ],
   "licenses": [
     {
       "type": "MIT",
       "url": "http://mit-license.org/"
     }
   ],
-  "repositories": [{ "type": "git", "url": "https://github.com/asciidisco/Backbone.Mutators" }],
+  "repositories": [
+    {
+      "type": "git",
+      "url": "https://github.com/asciidisco/Backbone.Mutators"
+    }
+  ],
   "lib": ".",
   "main": "backbone.mutators.js",
   "devDependencies": {
@@ -43,6 +56,7 @@
   },
   "dependencies": {
     "underscore": "~1.4.x",
-    "backbone": "~1.0.x"
+    "backbone": "~1.0.x",
+    "grunt-saucelabs": "~4.0.0"
   }
 }

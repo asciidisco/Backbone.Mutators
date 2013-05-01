@@ -25,6 +25,21 @@ module.exports = function(grunt) {
       all: ['test/**/*.html']
     },
 
+  'saucelabs-qunit': {
+    all: {
+        options: {
+          username: 'asciidisco',
+          key: 'adaf8bb4-7712-440d-8ccb-0af3c9f68689', // if not provided it'll default to ENV SAUCE_ACCESS_KEY (if applicable)
+          urls: ['http://rawgithub.com/asciidisco/Backbone.Mutators/master/test/index_sauce.html'],
+          tunnelTimeout: 50000,
+          testTimeout: 50000,
+          browsers: [{
+            browserName: 'opera'
+          }]
+        }
+      }
+    },
+
     nodeunit: {
       all: ['test/*node_test.js']
     },
@@ -90,12 +105,13 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-uglify');
   grunt.loadNpmTasks('grunt-contrib-nodeunit');
   grunt.loadNpmTasks('grunt-contrib-yuidoc');
+  grunt.loadNpmTasks('grunt-saucelabs');
   grunt.loadNpmTasks('grunt-complexity');
   grunt.loadNpmTasks('grunt-docco');
   grunt.loadNpmTasks('grunt-plato');
 
   // Default task.
   grunt.registerTask('default', ['jshint', 'qunit', 'nodeunit', 'concat', 'uglify']);
-  grunt.registerTask('travis', 'qunit lint');
+  grunt.registerTask('travis', ['lint', 'qunit', 'saucelabs-qunit']);
 
 };

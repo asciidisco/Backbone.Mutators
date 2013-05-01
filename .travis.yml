@@ -1,5 +1,13 @@
+---
 language: node_js
 node_js:
-  - 0.8
+- 0.8
 before_script:
-  - "grunt travis --verbose"
+- grunt travis --verbose
+env:
+  matrix:
+  - secure: ! 'iDVcf5UvrZqr05dnnJx5guL+Vp+TW+gX/IA1H20sl4XxzgQhXWtcvpMGLckY
+
+      YgI5lQmR3nIakU0/3hm8wd+RnXM04Ss+XLe6Bu2gNkNxpPuP9JMZRPdFNdsB
+
+      NgzgpvREUGViRC4zITqjeJuKUaY4eM8un3k7f2Fqh0XD9QZ29KU='
