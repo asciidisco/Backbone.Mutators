@@ -1,7 +1,6 @@
 var _ = require('underscore');
 var Backbone = require('Backbone');
 require('../src/backbone.mutators');
-var nodeunit = require('nodeunit-browser-tap');
 
 exports['require'] = {
 

@@ -47,16 +47,13 @@
     "grunt-contrib-concat": "~0.3.x",
     "grunt-contrib-nodeunit": "~0.1.x",
     "grunt-contrib-yuidoc": "~0.4.x",
+    "grunt-saucelabs": "~4.0.0",
     "grunt-docco": "~0.2.x",
     "grunt-plato": "~0.2.x",
-    "grunt-complexity": "~0.1.x",
-    "wd": "~0.0.x",
-    "q": "~0.9.x",
-    "request": "~2.21.x"
+    "grunt-complexity": "~0.1.x"
   },
   "dependencies": {
     "underscore": "~1.4.x",
-    "backbone": "~1.0.x",
-    "grunt-saucelabs": "~4.0.0"
+    "backbone": "~1.0.x"
   }
 }
