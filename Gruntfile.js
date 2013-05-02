@@ -29,7 +29,6 @@ module.exports = function(grunt) {
       generic: {
         src: ['src/*.js'],
         options: {
-          jsLintXML: 'report/complexity.xml',
           errorsOnly: false,
           cyclomatic: 8,
           halstead: 31,
