@@ -25,6 +25,29 @@ module.exports = function(grunt) {
       all: ['test/index.html']
     },
 
+    complexity: {
+      generic: {
+        src: ['src/*.js'],
+        options: {
+          jsLintXML: 'report/complexity.xml',
+          errorsOnly: false,
+          cyclomatic: 8,
+          halstead: 31,
+          maintainability: 100
+        }
+      }
+    },
+
+    plato: {
+      bc: {
+        src: ['src/backbone.mutators.js'],
+        dest: 'docs/complexity',
+        options: {
+          jshint : grunt.file.readJSON('.jshintrc')
+        }
+      }
+    },
+
   'saucelabs-qunit': {
     all: {
         options: {
@@ -118,7 +141,21 @@ module.exports = function(grunt) {
       debug: {
         src: ['src/*.js'],
         options: {
-          output: 'docs/'
+          output: 'docs/literal'
+        }
+      }
+    },
+
+    yuidoc: {
+      compile: {
+        name: '<%= pkg.name %>',
+        description: '<%= pkg.description %>',
+        version: '<%= pkg.version %>',
+        options: {
+          linkNatives: true,
+          selleck: true,
+          paths: 'src/',
+          outdir: 'docs/api'
         }
       }
     }
@@ -138,8 +175,8 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-plato');
 
   // Default task.
-  grunt.registerTask('default', ['jshint', 'qunit', 'nodeunit', 'concat', 'uglify']);
-  grunt.registerTask('travis', ['jshint', 'qunit', 'saucelabs-qunit']);
+  grunt.registerTask('default', ['jshint', 'complexity', 'qunit', 'nodeunit', 'concat', 'uglify']);
+  grunt.registerTask('travis', ['jshint', 'complexity', 'qunit', 'saucelabs-qunit']);
 
 
 };
