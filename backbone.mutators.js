@@ -26,7 +26,7 @@ IN THE SOFTWARE.*/
 (function (root, factory, undef) {
     'use strict';
 
-    if (typeof exports === 'object') {
+    if (typeof exports === 'object' && typeof require === 'function') {
         // Node. Does not work with strict CommonJS, but
         // only CommonJS-like enviroments that support module.exports,
         // like Node.
