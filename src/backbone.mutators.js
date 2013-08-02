@@ -96,6 +96,8 @@
             ret = null,
             attrs = null;
 
+		ret = oldSet.call(this, key, value, options);
+
         // seamleassly stolen from backbone core
         // check if the setter action is triggered
         // using key <-> value or object
@@ -118,10 +120,10 @@
             }
         }
 
-        if (_.isObject(attrs)) {
+        if (isMutator === true && _.isObject(attrs)) {
             _.each(attrs, _.bind(function (attr, attrKey) {
                 var cur_ret = null;
-                if (isMutator === true && _.isObject(this.mutators[attrKey]) === true) {
+                if (_.isObject(this.mutators[attrKey]) === true) {
                     // check if we need to set a single value
 
                     var meth = this.mutators[attrKey];
@@ -133,25 +135,14 @@
                         if (options === undef || (_.isObject(options) === true && options.silent !== true && (options.mutators !== undef && options.mutators.silent !== true))) {
                             this.trigger('mutators:set:' + attrKey);
                         }
-                        cur_ret = meth.call(this, attrKey, attr, options, _.bind(oldSet, this));
+                        meth.call(this, attrKey, attr, options, _.bind(oldSet, this));
                     }
 
                 }
-                if (cur_ret === null) {
-                    cur_ret = _.bind(oldSet, this)(attrKey, attr, options);
-                }
-
-                if (ret !== false) { ret = cur_ret; }
-
             }, this));
         }
 
-        //validation purposes
-        if (ret !== null) {
-            return ret;
-        }
-
-        return oldSet.call(this, key, value, options);
+        return ret;
     };
 
     // override toJSON functionality to serialize mutator properties
