@@ -122,7 +122,6 @@
 
         if (isMutator === true && _.isObject(attrs)) {
             _.each(attrs, _.bind(function (attr, attrKey) {
-                var cur_ret = null;
                 if (_.isObject(this.mutators[attrKey]) === true) {
                     // check if we need to set a single value
 
