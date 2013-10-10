@@ -1,28 +1,3 @@
-/*! Backbone.Mutators - v0.4.0
-------------------------------
-Build @ 2013-05-01
-Documentation and Full License Available at:
-http://asciidisco.github.com/Backbone.Mutators/index.html
-git://github.com/asciidisco/Backbone.Mutators.git
-Copyright (c) 2013 Sebastian Golasch <public@asciidisco.com>
-
-Permission is hereby granted, free of charge, to any person obtaining a
-copy of this software and associated documentation files (the "Software"),
-to deal in the Software without restriction, including without limitation
-the rights to use, copy, modify, merge, publish, distribute, sublicense,
-and/or sell copies of the Software, and to permit persons to whom the
-
-Software is furnished to do so, subject to the following conditions:
-The above copyright notice and this permission notice shall be included in
-all copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
-EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
-IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
-DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE,
-ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS
-IN THE SOFTWARE.*/
 (function (root, factory, undef) {
     'use strict';
 
@@ -121,6 +96,8 @@ IN THE SOFTWARE.*/
             ret = null,
             attrs = null;
 
+		ret = oldSet.call(this, key, value, options);
+
         // seamleassly stolen from backbone core
         // check if the setter action is triggered
         // using key <-> value or object
@@ -143,10 +120,9 @@ IN THE SOFTWARE.*/
             }
         }
 
-        if (_.isObject(attrs)) {
+        if (isMutator === true && _.isObject(attrs)) {
             _.each(attrs, _.bind(function (attr, attrKey) {
-                var cur_ret = null;
-                if (isMutator === true && _.isObject(this.mutators[attrKey]) === true) {
+                if (_.isObject(this.mutators[attrKey]) === true) {
                     // check if we need to set a single value
 
                     var meth = this.mutators[attrKey];
@@ -158,25 +134,14 @@ IN THE SOFTWARE.*/
                         if (options === undef || (_.isObject(options) === true && options.silent !== true && (options.mutators !== undef && options.mutators.silent !== true))) {
                             this.trigger('mutators:set:' + attrKey);
                         }
-                        cur_ret = meth.call(this, attrKey, attr, options, _.bind(oldSet, this));
+                        meth.call(this, attrKey, attr, options, _.bind(oldSet, this));
                     }
 
                 }
-                if (cur_ret === null) {
-                    cur_ret = _.bind(oldSet, this)(attrKey, attr, options);
-                }
-
-                if (ret !== false) { ret = cur_ret; }
-
             }, this));
         }
 
-        //validation purposes
-        if (ret !== null) {
-            return ret;
-        }
-
-        return oldSet.call(this, key, value, options);
+        return ret;
     };
 
     // override toJSON functionality to serialize mutator properties
