@@ -320,6 +320,14 @@ has written a blog article about Mutators ([Exploring Backbone.Mutators](http://
 
 ## Changelog
 
+### 0.4.1
++ Fixes [#22](https://github.com/asciidisco/Backbone.Mutators/pull/22)
++ Fixes [#24](https://github.com/asciidisco/Backbone.Mutators/pull/24)
+
+### 0.3.1
++ Change get context to modal instead of attributes
++ Added single getter / setter method
+
 ### 0.3.1
 + Change get context to modal instead of attributes
 + Added single getter / setter method
