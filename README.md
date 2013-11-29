@@ -314,6 +314,37 @@ Some lines of code explain more then thousand words...
  });
 ```
 
+### Define a getter as transient
+Defining a getter as transient means that it will be omitted when Backbone saves the model. This is 
+useful if the backend system (whatever node is syncing to) fails if you send it a property that does
+not actually exist on the model. Note that this only works for mutators defined with a `get()`
+function.
+
+In the example below, the `fullName` property will be available when toJSON is called under
+non-syncing circumstances--for example, when providing this model to a template--but will be omitted
+from the JSON when sync is called (because you called the `sync()` or `save()` method), and will not
+be sent to the server.
+```javascript
+var Model = Backbone.Model.extend({
+  defaults:{
+    firstName:"Iain",
+    middleInit:"M",
+    lastName:"Banks"
+  },
+  mutators:{
+    fullName:{
+      get: function() {
+        var fullName = this.get("firstName");
+        fullName += " " + this.get("middleInit");
+        fullName += ". " + this.get("lastName");
+        return fullName;
+      },
+      transient: true
+    }
+  }
+});
+```
+
 ## Further reading
 James Brown ([@ibjhb](https://github.com/ibjhb/Exploring-Backbone.Mutators))
 has written a blog article about Mutators ([Exploring Backbone.Mutators](http://ja.mesbrown.com/2012/03/exploring-backbone-mutators-plugin/))
