@@ -316,7 +316,7 @@ Some lines of code explain more then thousand words...
 
 ### Define a getter as transient
 Defining a getter as transient means that it will be omitted when Backbone saves the model. This is 
-useful if the backend system (whatever node is syncing to) fails if you send it a property that does
+useful if the backend system (whatever Backbone is syncing to) fails if you send it a property that does
 not actually exist on the model. Note that this only works for mutators defined with a `get()`
 function.
 
