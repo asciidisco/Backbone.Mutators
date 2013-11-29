@@ -21,7 +21,7 @@ vanilla javascript.
 
 The plugin has two dependencies, underscore.js and backbone.js
 
-### Dowload
+### Download
 You can directly download the
 [Development Version](https://raw.github.com/asciidisco/Backbone.Mutators/master/backbone.mutators.js)
 or the
