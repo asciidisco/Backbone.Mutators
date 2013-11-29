@@ -328,7 +328,7 @@ exports['require'] = {
     },
 
     "can set 'mutated' value and fire event": function (test) {
-        test.expect(3);
+        test.expect(4);
         var Model = Backbone.Model.extend({
             mutators: {
                 status: {

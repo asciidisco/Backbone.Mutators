@@ -313,7 +313,7 @@ test("can set 'mutated' value and fire event", function () {
 });
 
 test("can set 'mutated' value and fire event", function () {
-    expect(3);
+    expect(4);
     var Model = Backbone.Model.extend({
         mutators: {
             status: {
