@@ -1,6 +1,6 @@
 /*! Backbone.Mutators - v0.4.1
 ------------------------------
-Build @ 2013-11-28
+Build @ 2013-12-01
 Documentation and Full License Available at:
 http://asciidisco.github.com/Backbone.Mutators/index.html
 git://github.com/asciidisco/Backbone.Mutators.git
@@ -170,14 +170,20 @@ IN THE SOFTWARE.*/
     };
 
     // override toJSON functionality to serialize mutator properties
-    Mutator.prototype.toJSON = function () {
+    Mutator.prototype.toJSON = function (options) {
         // fetch ye olde values
-        var attr = oldToJson.call(this);
+        var attr = oldToJson.call(this),
+            isSaving,
+            isTransient;
         // iterate over all mutators (if there are some)
         _.each(this.mutators, _.bind(function (mutator, name) {
             // check if we have some getter mutations
             if (_.isObject(this.mutators[name]) === true && _.isFunction(this.mutators[name].get)) {
-                attr[name] = _.bind(this.mutators[name].get, this)();
+                isSaving = _.has(options || {}, 'emulateHTTP');
+                isTransient = this.mutators[name].transient;
+                if (!isSaving || !isTransient) {
+                  attr[name] = _.bind(this.mutators[name].get, this)();
+                } 
             } else {
                 attr[name] = _.bind(this.mutators[name], this)();
             }
