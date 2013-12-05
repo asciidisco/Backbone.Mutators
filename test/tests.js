@@ -313,7 +313,7 @@ test("can set 'mutated' value and fire event", function () {
 });
 
 test("can set 'mutated' value and fire event", function () {
-    expect(3);
+    expect(4);
     var Model = Backbone.Model.extend({
         mutators: {
             status: {
@@ -432,4 +432,41 @@ test("can get/set using single method", 6, function(){
     equal(model.get('state'), new_state);
     equal(model.get('level'), new_level);
 
+});
+
+test("can omit transient variables from JSON when saving", 4, function() {
+  var Model = Backbone.Model.extend({
+    defaults:{
+      firstName:"Iain",
+      middleInit:"M",
+      lastName:"Banks"
+    },
+    mutators:{
+      fullName:{
+        get: function() {
+          var fullName = this.get("firstName");
+          fullName += " " + this.get("middleInit");
+          fullName += ". " + this.get("lastName");
+          return fullName;
+        },
+        transient: true
+      }
+    }
+  });
+  
+  var model = new Model();
+  // First make sure we didn't break the accessor (or the normal model property
+  // access)
+  equal(model.get("fullName"), "Iain M. Banks");
+  equal(model.get("firstName"), "Iain");
+  
+  // Ensure that a normal toJSON call (like you'd use with a template) includes
+  // the computed value
+  var modelToJSON = model.toJSON();
+  equal(modelToJSON.fullName, "Iain M. Banks");
+  
+  // Backbone always sets 'emulateHTTP' to true or (usually) false when syncing, 
+  // so we use the existence of that property as a proxy for "yes I'm syncing"
+  var modelToJSONSync = model.toJSON({emulateHTTP:false});
+  equal(typeof modelToJSONSync.fullName, "undefined");
 });
