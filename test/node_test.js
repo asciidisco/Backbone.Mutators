@@ -1,5 +1,5 @@
 var _ = require('underscore');
-var Backbone = require('Backbone');
+var Backbone = require('backbone');
 require('../src/backbone.mutators');
 
 exports['require'] = {
@@ -389,6 +389,29 @@ exports['require'] = {
         test.equal((new Model()).toJSON().a, 'a', 'can serialize mutated model');
         test.equal((new Model()).get('state'), 'a, b', 'can serialize mutated model');
         test.equal((new Model()).toJSON().state, 'a, b', 'can serialize mutated model');
+        test.done();
+    },
+
+    "can serialize mutated model with only a setter": function (test) {
+        test.expect(2);
+        var Model = Backbone.Model.extend({
+            mutators: {
+                status: {
+                    set: function (key, value, options, set) {
+                        set(key, value.toLowerCase(), options);
+                    }
+                }
+            },
+            defaults: {
+                status: 'awkward'
+            }
+        });
+
+        var model = new Model();
+
+        test.equal(model.toJSON().status, 'awkward', 'can serialize mutated model with only a setter');
+        model.set('status', 'SUPERCOOL', {mutators: {silent: true}});
+        test.equal(model.toJSON().status, 'supercool', 'can serialize mutated model with only a setter');
         test.done();
     },
 

@@ -5,7 +5,7 @@
         // Node. Does not work with strict CommonJS, but
         // only CommonJS-like enviroments that support module.exports,
         // like Node.
-        module.exports = factory(require('underscore'), require('Backbone'));
+        module.exports = factory(require('underscore'), require('backbone'));
     } else if (typeof define === 'function' && define.amd) {
         // AMD. Register as an anonymous module.
         define(['underscore', 'backbone'], function (_, Backbone) {
@@ -158,8 +158,8 @@
                 isTransient = this.mutators[name].transient;
                 if (!isSaving || !isTransient) {
                   attr[name] = _.bind(this.mutators[name].get, this)();
-                } 
-            } else {
+                }
+            } else if (_.isFunction(this.mutators[name])) {
                 attr[name] = _.bind(this.mutators[name], this)();
             }
         }, this));
