@@ -375,6 +375,28 @@ test("can serialize mutated model", function () {
     equal((new Model()).toJSON().state, 'a, b', 'can serialize mutated model');
 });
 
+test("can serialize mutated model with only a setter", function () {
+    expect(2);
+    var Model = Backbone.Model.extend({
+        mutators: {
+            status: {
+                set: function (key, value, options, set) {
+                    set(key, value.toLowerCase(), options);
+                }
+            }
+        },
+        defaults: {
+            status: 'awkward'
+        }
+    });
+
+    var model = new Model();
+
+    equal(model.toJSON().status, 'awkward', 'can serialize mutated model');
+    model.set('status', 'SUPERCOOL', {mutators: {silent: true}});
+    equal(model.toJSON().status, 'supercool', 'can serialize mutated model');
+});
+
 test("can escape mutated properties", function () {
     expect(2);
     var Model = Backbone.Model.extend({

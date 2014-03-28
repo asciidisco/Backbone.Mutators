@@ -1,10 +1,10 @@
 /*! Backbone.Mutators - v0.4.1
 ------------------------------
-Build @ 2013-12-01
+Build @ 2014-03-27
 Documentation and Full License Available at:
 http://asciidisco.github.com/Backbone.Mutators/index.html
 git://github.com/asciidisco/Backbone.Mutators.git
-Copyright (c) 2013 Sebastian Golasch <public@asciidisco.com>
+Copyright (c) 2014 Sebastian Golasch <public@asciidisco.com>
 
 Permission is hereby granted, free of charge, to any person obtaining a
 copy of this software and associated documentation files (the "Software"),
@@ -30,7 +30,7 @@ IN THE SOFTWARE.*/
         // Node. Does not work with strict CommonJS, but
         // only CommonJS-like enviroments that support module.exports,
         // like Node.
-        module.exports = factory(require('underscore'), require('Backbone'));
+        module.exports = factory(require('underscore'), require('backbone'));
     } else if (typeof define === 'function' && define.amd) {
         // AMD. Register as an anonymous module.
         define(['underscore', 'backbone'], function (_, Backbone) {
@@ -183,8 +183,8 @@ IN THE SOFTWARE.*/
                 isTransient = this.mutators[name].transient;
                 if (!isSaving || !isTransient) {
                   attr[name] = _.bind(this.mutators[name].get, this)();
-                } 
-            } else {
+                }
+            } else if (_.isFunction(this.mutators[name])) {
                 attr[name] = _.bind(this.mutators[name], this)();
             }
         }, this));
