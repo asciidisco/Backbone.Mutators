@@ -351,6 +351,9 @@ has written a blog article about Mutators ([Exploring Backbone.Mutators](http://
 
 ## Changelog
 
+### 0.4.2
++ Fixes [#20](https://github.com/asciidisco/Backbone.Mutators/issues/20)
+
 ### 0.4.1
 + Fixes [#22](https://github.com/asciidisco/Backbone.Mutators/pull/22)
 + Fixes [#24](https://github.com/asciidisco/Backbone.Mutators/pull/24)
