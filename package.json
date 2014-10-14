@@ -53,7 +53,9 @@
     "grunt-complexity": "~0.1.x"
   },
   "dependencies": {
-    "underscore": "~1.4.x",
+    "underscore": "~1.4.x"
+  },
+  "peerDependencies": {
     "backbone": "~1.0.x"
   }
 }
