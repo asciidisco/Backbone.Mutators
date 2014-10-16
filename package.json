@@ -1,6 +1,6 @@
 {
   "name": "Backbone.Mutators",
-  "version": "0.4.2",
+  "version": "0.4.3",
   "description": "Backbone plugin to override getters and setters with logic",
   "homepage": "http://asciidisco.github.com/Backbone.Mutators/index.html",
   "keywords": [
