@@ -351,6 +351,13 @@ has written a blog article about Mutators ([Exploring Backbone.Mutators](http://
 
 ## Changelog
 
+### 0.4.4
++ Add mutator dependancies and change events [#33](https://github.com/asciidisco/Backbone.Mutators/commit/7c7626456991dd4de5419e7a5a0bd3e62090297f)
+
+### 0.4.3
++ Made compatible with browserify [#32](https://github.com/asciidisco/Backbone.Mutators/commit/0d7f846727ae9b546bba203d4c4b7c2ff5704222)
++ Backbone dependency version bump [#32](https://github.com/asciidisco/Backbone.Mutators/commit/5c0db12e34aaa5f0fac39b76a9bf8c44e1bea641)
+
 ### 0.4.2
 + Fixes [#20](https://github.com/asciidisco/Backbone.Mutators/issues/20)
 

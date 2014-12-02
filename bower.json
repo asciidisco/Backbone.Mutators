@@ -1,6 +1,6 @@
 {
   "name": "Backbone.Mutators",
-  "version": "0.4.3",
+  "version": "0.4.4",
   "main": "backbone.mutators.js",
   "dependencies": {
     "underscore": ">=1.4.4",

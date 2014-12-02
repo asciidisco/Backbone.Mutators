@@ -1,10 +1,10 @@
-/*! Backbone.Mutators - v0.4.1
+/*! Backbone.Mutators - v0.4.4
 ------------------------------
-Build @ 2013-12-01
+Build @ 2014-12-02
 Documentation and Full License Available at:
 http://asciidisco.github.com/Backbone.Mutators/index.html
 git://github.com/asciidisco/Backbone.Mutators.git
-Copyright (c) 2013 Sebastian Golasch <public@asciidisco.com>
+Copyright (c) 2014 Sebastian Golasch <public@asciidisco.com>
 
 Permission is hereby granted, free of charge, to any person obtaining a
 copy of this software and associated documentation files (the "Software"),
@@ -30,7 +30,7 @@ IN THE SOFTWARE.*/
         // Node. Does not work with strict CommonJS, but
         // only CommonJS-like enviroments that support module.exports,
         // like Node.
-        module.exports = factory(require('underscore'), require('Backbone'));
+        module.exports = factory(require('underscore'), require('backbone'));
     } else if (typeof define === 'function' && define.amd) {
         // AMD. Register as an anonymous module.
         define(['underscore', 'backbone'], function (_, Backbone) {
@@ -121,10 +121,6 @@ IN THE SOFTWARE.*/
             ret = null,
             attrs = null;
 
-        if (isMutator && !this._dependencyCache) {
-            this._setDependancyCache();
-        }
-
 		ret = oldSet.call(this, key, value, options);
 
         // seamleassly stolen from backbone core
@@ -165,31 +161,12 @@ IN THE SOFTWARE.*/
                         }
                         meth.call(this, attrKey, attr, options, _.bind(oldSet, this));
                     }
-                }
 
-                var mutatorsArray = this._dependencyCache[attrKey] || [];
-
-                if (mutatorsArray.length) {
-                    _.each(mutatorsArray, function (obj) {
-                        this.trigger('change:' + obj.mutator, this, options);
-                    }, this);
                 }
             }, this));
         }
 
         return ret;
-    };
-
-    Mutator.prototype._setDependancyCache = function () {
-        this._dependencyCache = _(this.mutators)
-            .map(function (m, k) {
-                return _.map(m.depends, function (attr) {
-                    return { attr: attr, mutator: k };
-                });
-            })
-            .flatten()
-            .groupBy('attr')
-            .valueOf();
     };
 
     // override toJSON functionality to serialize mutator properties
@@ -207,7 +184,7 @@ IN THE SOFTWARE.*/
                 if (!isSaving || !isTransient) {
                   attr[name] = _.bind(this.mutators[name].get, this)();
                 }
-            } else {
+            } else if (_.isFunction(this.mutators[name])) {
                 attr[name] = _.bind(this.mutators[name], this)();
             }
         }, this));
