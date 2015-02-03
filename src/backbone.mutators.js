@@ -148,13 +148,14 @@
     Mutator.prototype.toJSON = function (options) {
         // fetch ye olde values
         var attr = oldToJson.call(this),
+            model = this,
             isSaving,
             isTransient;
         // iterate over all mutators (if there are some)
         _.each(this.mutators, _.bind(function (mutator, name) {
             // check if we have some getter mutations
             if (_.isObject(this.mutators[name]) === true && _.isFunction(this.mutators[name].get)) {
-                isSaving = _.has(options || {}, 'emulateHTTP');
+                isSaving = (model.isSaving) ? model.isSaving(options, mutator, name) : _.has(options || {}, 'emulateHTTP');
                 isTransient = this.mutators[name].transient;
                 if (!isSaving || !isTransient) {
                   attr[name] = _.bind(this.mutators[name].get, this)();
