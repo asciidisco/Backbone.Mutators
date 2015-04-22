@@ -351,6 +351,10 @@ has written a blog article about Mutators ([Exploring Backbone.Mutators](http://
 
 ## Changelog
 
+### 0.4.5
++ Extended mutators check [#38](https://github.com/asciidisco/Backbone.Mutators/pull/38)
++ Allow to specify custom isSaving() method to detect when toJSON() is cal... [#36](https://github.com/asciidisco/Backbone.Mutators/pull/36)
+
 ### 0.4.4
 + Add mutator dependancies and change events [#33](https://github.com/asciidisco/Backbone.Mutators/commit/7c7626456991dd4de5419e7a5a0bd3e62090297f)
 
