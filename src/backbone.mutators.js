@@ -110,7 +110,7 @@
         }
 
         // check if we have a deeper nested setter mutation
-        if (isMutator === true && _.isObject(this.mutators[key]) === true) {
+        if (isMutator === true && !_.isObject(key) && _.isObject(this.mutators[key]) === true) {
 
             // check if we need to set a single value
             if (_.isFunction(this.mutators[key].set) === true) {
