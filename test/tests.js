@@ -456,7 +456,7 @@ test("can get/set using single method", 6, function(){
 
 });
 
-test("can omit transient variables from JSON when saving", 4, function() {
+test("can omit transient variables from JSON when saving", 5, function() {
   var Model = Backbone.Model.extend({
     defaults:{
       firstName:"Iain",
@@ -490,5 +490,14 @@ test("can omit transient variables from JSON when saving", 4, function() {
   // Backbone always sets 'emulateHTTP' to true or (usually) false when syncing, 
   // so we use the existence of that property as a proxy for "yes I'm syncing"
   var modelToJSONSync = model.toJSON({emulateHTTP:false});
+  equal(typeof modelToJSONSync.fullName, "undefined");
+
+  // When not using Backbone's sync() we might need to use different way to detect
+  // saving to backend event.
+  model.isSaving = function(options) {
+      return model._state === 'saving' || _.has(options || {}, 'emulateHTTP');
+  };
+  model._state = 'saving';
+  modelToJSONSync = model.toJSON();
   equal(typeof modelToJSONSync.fullName, "undefined");
 });

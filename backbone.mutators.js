@@ -1,10 +1,10 @@
 /*! Backbone.Mutators - v0.4.4
 ------------------------------
-Build @ 2014-12-02
+Build @ 2015-02-03
 Documentation and Full License Available at:
 http://asciidisco.github.com/Backbone.Mutators/index.html
 git://github.com/asciidisco/Backbone.Mutators.git
-Copyright (c) 2014 Sebastian Golasch <public@asciidisco.com>
+Copyright (c) 2015 Sebastian Golasch <public@asciidisco.com>
 
 Permission is hereby granted, free of charge, to any person obtaining a
 copy of this software and associated documentation files (the "Software"),
@@ -179,7 +179,7 @@ IN THE SOFTWARE.*/
         _.each(this.mutators, _.bind(function (mutator, name) {
             // check if we have some getter mutations
             if (_.isObject(this.mutators[name]) === true && _.isFunction(this.mutators[name].get)) {
-                isSaving = _.has(options || {}, 'emulateHTTP');
+                isSaving = (this.isSaving) ? this.isSaving(options, mutator, name) : _.has(options || {}, 'emulateHTTP');
                 isTransient = this.mutators[name].transient;
                 if (!isSaving || !isTransient) {
                   attr[name] = _.bind(this.mutators[name].get, this)();
