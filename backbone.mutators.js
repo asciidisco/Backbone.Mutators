@@ -1,6 +1,6 @@
-/*! Backbone.Mutators - v0.4.4
+/*! Backbone.Mutators - v0.4.5
 ------------------------------
-Build @ 2015-02-03
+Build @ 2015-04-23
 Documentation and Full License Available at:
 http://asciidisco.github.com/Backbone.Mutators/index.html
 git://github.com/asciidisco/Backbone.Mutators.git
@@ -135,7 +135,7 @@ IN THE SOFTWARE.*/
         }
 
         // check if we have a deeper nested setter mutation
-        if (isMutator === true && _.isObject(this.mutators[key]) === true) {
+        if (isMutator === true && !_.isObject(key) && _.isObject(this.mutators[key]) === true) {
 
             // check if we need to set a single value
             if (_.isFunction(this.mutators[key].set) === true) {
