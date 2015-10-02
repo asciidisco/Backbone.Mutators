@@ -395,3 +395,6 @@ has written a blog article about Mutators ([Exploring Backbone.Mutators](http://
 
 ### 0.1.0
 + Initial Release
+
+## License
+MIT - https://tldrlegal.com/license/mit-license
